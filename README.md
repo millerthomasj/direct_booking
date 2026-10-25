@@ -1,6 +1,11 @@
 # Red Hawk 2240 — direct-booking design concepts
 
 Three complete static website mockups for the Keystone, Colorado condo.
+Shareable preview: https://millerthomasj.github.io/direct_booking/
+
+GitHub Pages serves this review from `main` at the repository root. No custom
+domain was changed. Pages use `noindex,nofollow` while the designs are reviewed.
+
 Start at [the comparison page](index.html), or open:
 
 1. [The Alpine Edit](alpine.html) — forest green/ivory, refined editorial hospitality.
@@ -78,3 +83,8 @@ live quotes, conflict-safe reservations and secure payments. Add the actual
 rental policies and owner contact details, then point the real domain at the
 chosen site. Do not treat an editable static calendar or an iCal feed alone as a
 reservation guarantee. No booking provider or fees have been selected yet.
+
+Validated October 25: all six 1440px/390px interaction flows pass, with additional
+320px and 768px overflow checks on the comparison and every concept. Local
+photographs and font load successfully. No browser console errors or failed
+asset requests were observed. The design review PDF contains four pages.
