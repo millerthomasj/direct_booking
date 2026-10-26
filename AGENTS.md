@@ -30,12 +30,12 @@ Do not treat it as one site with interchangeable booking widgets.
   and phone date/select inputs at 16px. The user found the previous tiny text
   difficult to read; do not restore it to fit layouts. Adjust wrapping instead.
 - Main page design: lead with beautifully designed, carefully maintained homes
-  and personal hosting by Hope & Thomas. The owner’s October 26 feedback moved
+  and personal hosting by Hope & Tom. The owner’s October 26 feedback moved
   the brand toward “why book one of our condos,” supported by real guest reviews.
   Keep the Keystone skiing headline photo, clear summaries of both property
   choices near the top. The owner removed the comparison-table section; do not
   restore it or links to #compare. Retain photo credits.
-- Calopi means Caleb, Loreli and Pippa, the owners’ three children. The owner-supplied
+- Calopi means Caleb, Lorelei and Pippa, the owners’ three children. The owner-supplied
   logo is `assets/calopi-logo.png`, with `assets/calopi-favicon.png`. This replaces
   the earlier three-peak SVG. The original JPEG was converted to PNG on the
   owner’s Desktop; the web copy trims the surrounding presentation canvas.
