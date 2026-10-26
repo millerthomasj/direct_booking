@@ -1,0 +1,76 @@
+{
+  "verified_on": "2026-10-26",
+  "method": "Read public Airbnb listing review dialogs in the authenticated owner browser. Selected exact excerpts; first names only. Full review text and guest profile details are not retained in the repository.",
+  "listings": [
+    {
+      "listing_id": "45842208",
+      "property": "Red Hawk 2240",
+      "rating": 4.91,
+      "review_count": 132
+    },
+    {
+      "listing_id": "1237080165740047360",
+      "property": "Silvermill 8294",
+      "rating": 4.98,
+      "review_count": 43
+    }
+  ],
+  "selected_reviews": [
+    {
+      "guest": "Andrea",
+      "property": "Red Hawk 2240",
+      "listing_id": "45842208",
+      "review_id": "1779070821296975314",
+      "date": "September 2026",
+      "stars": 5,
+      "quote": "The condo was spacious and felt luxurious, even beyond what we expected.",
+      "theme": "COMFORT, WITH A LITTLE EXTRA",
+      "source_url": "https://www.airbnb.com/rooms/45842208?modal=REVIEWS"
+    },
+    {
+      "guest": "Melody",
+      "property": "Silvermill 8294",
+      "listing_id": "1237080165740047360",
+      "review_id": "1349438352402749241",
+      "date": "February 2025",
+      "stars": 5,
+      "quote": "Very clean and furnished intentionally.",
+      "theme": "THOUGHTFUL BY DESIGN",
+      "source_url": "https://www.airbnb.com/rooms/1237080165740047360?modal=REVIEWS"
+    },
+    {
+      "guest": "Hana",
+      "property": "Red Hawk 2240",
+      "listing_id": "45842208",
+      "review_id": "860931865954491890",
+      "date": "April 2023",
+      "stars": 5,
+      "quote": "The condo was literally spotless",
+      "theme": "CARE YOU CAN SEE",
+      "source_url": "https://www.airbnb.com/rooms/45842208?modal=REVIEWS"
+    },
+    {
+      "guest": "Lauren",
+      "property": "Silvermill 8294",
+      "listing_id": "1237080165740047360",
+      "review_id": "1632136681753356393",
+      "date": "March 2026",
+      "stars": 5,
+      "quote": "Communication was exceptional from start to finish.",
+      "theme": "A PERSONAL WELCOME",
+      "source_url": "https://www.airbnb.com/rooms/1237080165740047360?modal=REVIEWS"
+    }
+  ],
+  "review_audit": {
+    "public_reviews_crawled": 175,
+    "red_hawk_reviews_crawled": 132,
+    "silvermill_reviews_crawled": 43,
+    "themes": [
+      "Thoughtful decor and furnishings",
+      "Cleanliness and upkeep",
+      "Comfortable beds and living spaces",
+      "Responsive, helpful hosting"
+    ],
+    "presentation": "Selected positive excerpts, with individual listing ratings and snapshot date. No combined rating or claim that every review is positive."
+  }
+}

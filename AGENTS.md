@@ -28,9 +28,16 @@ Do not treat it as one site with interchangeable booking widgets.
 - Typography: keep small labels/captions at least 12px, body copy around 16–17px,
   and phone date/select inputs at 16px. The user found the previous tiny text
   difficult to read; do not restore it to fit layouts. Adjust wrapping instead.
-- Main page design: Keystone skiing headline photo; make the two choices and
-  their differences clear immediately. Avoid long generic hospitality copy
-  above the property choices. Retain photo attribution/license links.
+- Main page design: lead with beautifully designed, carefully maintained homes
+  and personal hosting by Hope & Thomas. The owner’s October 26 feedback moved
+  the brand toward “why book one of our condos,” supported by real guest reviews.
+  Keep the Keystone skiing headline photo, clear summaries of both property
+  choices near the top, and the detailed comparison below. Retain photo credits.
+- Guest review provenance: `docs/guest-review-sources.json`. Use verified short
+  excerpts with guest first name, property, month/year and Airbnb source links.
+  Ratings/counts are dated snapshots; verify before updating. Do not invent a
+  combined rating, imply all reviews are positive, or retain private reservation
+  details / full guest reviews in the repository.
 
 ## Property and booking distinctions
 
