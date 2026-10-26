@@ -1,15 +1,18 @@
 # Keystone direct-booking sites
 
+Agents: read [AGENTS.md](AGENTS.md) first for the three-site map, source ownership,
+OwnerRez IDs, exact deploy commands and the pending Red Hawk DNS step.
+
 Calopi Haven is the shared homepage. Both property websites use the selected
 Alpine design.
 
-| Site | Review URL | Planned domain |
+| Site | Review URL | Production domain |
 | --- | --- | --- |
 | Calopi Haven | https://millerthomasj.github.io/direct_booking/ | calopihaven.com |
 | Red Hawk 2240 | https://millerthomasj.github.io/direct_booking/redhawk.html | redhawk2240.com |
 | Silvermill 8294 | https://millerthomasj.github.io/direct_booking/silvermill.html | silvermill8294.com |
 
-Public links point to the planned domains in HTML. On the GitHub Pages review
+Public links point to the production domains in HTML. On the GitHub Pages review
 host and localhost, `site.js` maps those links to the matching preview pages so
 all three sites can be reviewed together before DNS changes. `data-preview-path`
 contains only the review counterpart. On real domains, the links remain public

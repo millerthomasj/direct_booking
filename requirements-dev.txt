@@ -1,0 +1,5 @@
+# Build/deploy tools and existing browser/screenshot checks.
+beautifulsoup4
+boto3
+playwright
+Pillow
