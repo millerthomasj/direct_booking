@@ -32,7 +32,8 @@ Do not treat it as one site with interchangeable booking widgets.
   and personal hosting by Hope & Thomas. The owner’s October 26 feedback moved
   the brand toward “why book one of our condos,” supported by real guest reviews.
   Keep the Keystone skiing headline photo, clear summaries of both property
-  choices near the top, and the detailed comparison below. Retain photo credits.
+  choices near the top. The owner removed the comparison-table section; do not
+  restore it or links to #compare. Retain photo credits.
 - Calopi means Caleb, Loreli and Pippa, the owners’ three children. The abstract
   three-peak mark is `assets/calopi-mark.svg`, with a matching Calopi-only favicon.
   Main-page motion lives in `calopi.js`: sliding hero photos, manual controls,
