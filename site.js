@@ -1,4 +1,15 @@
 (() => {
+  const localDate=date=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+  const nextDay=value=>{const d=new Date(value+'T12:00:00');d.setDate(d.getDate()+1);return localDate(d)};
+  document.querySelectorAll('.booking-form').forEach(form=>{
+    const arrival=form.elements.or_arrival,departure=form.elements.or_departure,error=form.querySelector('.date-error');
+    arrival.min=localDate(new Date());departure.min=nextDay(arrival.min);
+    arrival.addEventListener('change',()=>{departure.min=nextDay(arrival.value||arrival.min);if(departure.value&&departure.value<departure.min)departure.value='';error.textContent=''});
+    form.addEventListener('submit',event=>{
+      error.textContent='';
+      if(!arrival.value||!departure.value||arrival.value<arrival.min||departure.value<=arrival.value){event.preventDefault();error.textContent='Choose a future check-in date and a later check-out date.';}
+    });
+  });
   const lightbox=document.querySelector('.lightbox'),photos=[...document.querySelectorAll('[data-photo]')];let active=0;
   const showPhoto=index=>{active=(index+photos.length)%photos.length;const photo=photos[active];lightbox.querySelector('img').src=photo.dataset.photo;lightbox.querySelector('img').alt=photo.dataset.caption;lightbox.querySelector('p').textContent=photo.dataset.caption};
   photos.forEach((photo,index)=>photo.addEventListener('click',()=>{showPhoto(index);lightbox.showModal()}));

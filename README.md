@@ -23,19 +23,21 @@ No build or runtime dependencies. Open `index.html` directly, or:
 python3 -m http.server 8124 --bind 127.0.0.1
 ```
 
-Then visit http://127.0.0.1:8124. All fonts and photos are local; there are no API keys. The three concepts embed the OwnerRez booking widget. This mockup does not change
+Then visit http://127.0.0.1:8124. All fonts and photos are local; there are no API keys. The three concepts link to the OwnerRez booking widget with selected dates and guest counts. This mockup does not change
 the existing `www.redhawk2240.com` redirect or `checkin.redhawk2240.com` guide.
 
 ## Implemented
 
 Responsive desktop/phone layouts, photo dialogs, FAQs and seasonal controls.
-All three concepts now embed the same OwnerRez Book Now/Inquiry widget, restricted
-to Red Hawk 2240. Availability, quotes, inquiries and checkout are handled by
-OwnerRez using the existing property configuration. These are live forms.
+All three concepts use a compact date/guest selector that opens the full OwnerRez
+hosted booking form with `or_arrival`, `or_departure` and `or_guests` prefilled.
+Availability and pricing are confirmed on OwnerRez; the local date selector does
+not mark unavailable dates. No API key or third-party embed script is required.
+The hosted widget is restricted to Red Hawk 2240.
 
-Widget ID: `f13cd4d5594545a4b410a094355b8b4d` (public embed identifier).
-The widget includes a hosted-booking fallback link; no secret or backend is needed.
+Widget ID: `f13cd4d5594545a4b410a094355b8b4d` (public identifier).
 No reservations, inquiries or payments were submitted during verification.
+Reference: https://www.ownerrez.com/support/articles/prepopulate-widget-fields
 
 ## Sources and content
 
