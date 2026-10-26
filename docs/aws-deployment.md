@@ -55,7 +55,9 @@ site's AWS endpoint instead of Airbnb. This is a **temporary bridge for cached
 old DNS**, and keeps visitors using old DNS connected during propagation. Requests that reach Squarespace can therefore show a 302 to
 `*.cloudfront.net` while caches expire. The actual root-domain configuration on
 AWS serves HTTP 200 directly; Calopi/Silvermill www redirect to their root names.
-Red Hawk currently serves both root and www with a root canonical URL.
+All three www hostnames permanently redirect (301) to their own apex domains,
+preserving paths and query strings. Red Hawk’s temporary migration exception
+was removed after the nameserver switch.
 Do not delete the old forwarding rules while cached DNS may still reach them.
 
 On October 26 at 19:06 UTC, Google and Cloudflare public DNS returned CloudFront

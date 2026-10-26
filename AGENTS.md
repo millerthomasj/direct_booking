@@ -104,6 +104,9 @@ Do not treat it as one site with interchangeable booking widgets.
   zone IDs and assigned nameservers. ACM is in `us-east-1`; its ARN and validation
   records are recorded in `infrastructure/certificate.json` and
   `infrastructure/acm-validation.json`.
+- All three `www` hostnames use HTTPS and permanently redirect (301) to their
+  matching apex domain, preserving the path and query string. The former Red
+  Hawk migration exception was removed after nameserver cutover.
 - Roots use Route 53 A/AAAA aliases to CloudFront. **Do not put resolved
   CloudFront IPs into permanent A records.** No fixed IPs are needed.
 - Registrations remain at Squarespace. Preserve MX, SPF, DKIM, verification,
