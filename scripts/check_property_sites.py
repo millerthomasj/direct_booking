@@ -21,13 +21,14 @@ async def main():
      assert await page.locator('[name=or_children] option').evaluate_all('(options)=>options.map(o=>o.value)')==['0','1']
     assert await page.locator('.concept-bar').count()==0
     header=page.locator('.property-header')
-    assert await header.locator('img.calopi-logo').get_attribute('src')=='assets/calopi-logo.png'
+    assert await header.locator('.haven-brand').is_visible()
+    assert await header.locator('img.calopi-logo').count()==0
     assert ('Red Hawk 2240' if name=='redhawk' else 'Silvermill 8294') in await header.locator('.property-identity').inner_text()
     assert await header.locator('.property-identity').is_visible()
     assert await header.locator('a[data-preview-path="index.html"]').get_attribute('href')=='index.html'
     if name=='silvermill':
      assert await page.locator('img[src*="assets/photo-"]').count()==0
-     assert await page.locator('a[href="http://checkin.silvermill8294.com/"]').count()==1
+     assert await page.locator('a[href*="checkin."]').count()==0
     await page.locator('.gallery-grid .photo').first.click();assert await page.locator('.lightbox').evaluate('(d)=>d.open');await page.keyboard.press('ArrowRight');await page.keyboard.press('Escape')
     await page.locator('.faq summary').first.click()
     arrival=(date.today()+timedelta(days=42)).isoformat();departure=(date.today()+timedelta(days=46)).isoformat()

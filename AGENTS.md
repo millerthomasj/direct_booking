@@ -39,13 +39,15 @@ Do not treat it as one site with interchangeable booking widgets.
   Keep the Keystone skiing headline photo, clear summaries of both property
   choices near the top. The owner removed the comparison-table section; do not
   restore it or links to #compare. Retain photo credits.
-- Calopi means Caleb, Lorelei and Pippa, the owners’ three children. The owner-supplied
-  logo is `assets/calopi-logo.png`, with `assets/calopi-favicon.png`. This replaces
-  the earlier three-peak SVG. The original JPEG was converted to PNG on the
-  owner’s Desktop; the web copy trims the surrounding presentation canvas.
-  Main-page motion lives in `calopi.js`: sliding hero photos, manual controls,
-  pause and reduced-motion support; subtle scroll reveals. Keep photography and
-  reviews central, with readable text and clear links to both properties.
+- Brand presentation: use the simple Calopi Haven text wordmark across all
+  headers. The owner disliked the previous illustrated logo; it is currently
+  unused. Favicon: `assets/calopi-monogram.svg`. Do not publish the children’s
+  names or explain the origin of Calopi.
+- Silvermill is hosted, not owned, by Hope & Tom. Do not imply ownership of
+  both properties; describe them as the two condos they host.
+- Red Hawk is on the edge of River Run Village, for a slightly quieter stay.
+  Do not describe it as outside the village.
+- Main-page motion lives in `calopi.js`; preserve reduced-motion and pause support.
 - All three live pages mention Hope’s Airbnb Superhost status and link directly
   to the relevant Airbnb listing(s). Both statuses were verified October 26,
   2026 in the owner browser. Keep these visible alongside direct booking.
@@ -78,7 +80,9 @@ Do not treat it as one site with interchangeable booking widgets.
 - Silvermill: king, twin sleeper chair and sofa bed; less than 700 ft to gondola;
   hot tubs on site, **pool at nearby Dakota Lodge**, not at Silvermill.
 - Guest guides: `checkin.redhawk2240.com` and `checkin.silvermill8294.com`.
-  Preserve their existing Canva destinations. Never copy access codes, Wi-Fi
+  Preserve their existing Canva destinations for confirmed guests, but do not
+  link to either guide from any public page: they include lockbox information.
+  Never copy access codes, Wi-Fi
   passwords or other private arrival details into public site files.
 - Source notes and photo licenses live in `docs/*photo*.json` and the README.
 

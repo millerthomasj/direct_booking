@@ -70,7 +70,7 @@ Red Hawk: Airbnb listing 45842208 and the owner's guest guide, inspected October
 25, 2026. Photo attribution/source URLs: `docs/photo-sources.json`.
 
 Silvermill: https://www.airbnb.com/rooms/1237080165740047360 and the welcome page
-of the guide linked by http://checkin.silvermill8294.com/, inspected October 26,
+of the owner-supplied guest guide, inspected October 26,
 2026. Downloaded listing photos and source URLs are recorded in
 `docs/silvermill-photo-sources.json`. Silvermill is a fifth-floor, one-bedroom,
 one-bath condo for up to four adults and one child with a king bed, twin sleeper chair and living-room sofa

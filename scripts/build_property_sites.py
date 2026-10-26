@@ -11,7 +11,7 @@ def selected():
  s.title.string='Red Hawk 2240 | A mountain stay in Keystone'
  s.select_one('.hero-image')['src']='assets/photo-01.webp'
  s.select_one('.hero-image')['alt']='Red Hawk 2240 living room with a teal sofa, fireplace and space to gather'
- s.select_one('meta[name=description]')['content']='Stay at Red Hawk 2240 in Keystone: two bedrooms, space for six, a pool and hot tubs near River Run. Check dates and book your stay directly.'
+ s.select_one('meta[name=description]')['content']='Stay at Red Hawk 2240 in Keystone: two bedrooms, space for six, a pool and hot tubs on the edge of River Run Village. Check dates and book your stay directly.'
  for a in s.select('.brand'):a['href']='redhawk.html'
  s.select_one('.site-footer > div').append(BeautifulSoup('<a href="silvermill.html">Our other Keystone stay: Silvermill 8294 ↗</a>','html.parser'))
  return s
@@ -43,9 +43,9 @@ replace(s,'.amenity-story',f'''<section class="amenity-story" id="explore"><div 
 items=[(0,'Living room with fireplace and mountain-inspired artwork'),(21,'King bedroom with soft linens and an upholstered headboard'),(10,'Full kitchen with breakfast bar seating'),(25,'Bedroom workspace overlooking River Run Village'),(28,'Bathroom with shower and bathtub'),(53,'Shared billiards lounge at Silvermill Lodge')]
 replace(s,'.gallery-grid','<div class="gallery-grid">'+''.join(photo(n,a) for n,a in items)+'</div>')
 s.select_one('.gallery-section .section-top > p').clear();s.select_one('.gallery-section .section-top > p').append(BeautifulSoup('Your River Run retreat.<br/>A few very good places to unwind.','html.parser'))
-faqs=[('How close is the gondola?','The condo is in River Run Village, less than 700 feet from the River Run Gondola. Walk through the village to reach the lift, dining and shops.'),('Where will everyone sleep?','The one-bedroom condo sleeps up to 4 adults and 1 child, with a king bed, a twin sleeper chair in the bedroom and a pull-out sofa in the living room. There is one full bathroom.'),('Is parking included?','One heated underground garage parking space and a private ski locker are included. An elevator serves the building. Additional vehicles need separate parking arrangements.'),('Where are the pool and hot tubs?','The shared hot tubs are on site at Silvermill. The year-round heated pool is accessed at nearby Dakota Lodge. All shared amenities are subject to building access and maintenance.'),('What are the check-in and check-out times?','Check-in is after 4 PM and check-out is before 10 AM. Already booked? Use the guest guide linked below for arrival instructions.'),('Where can I see the rental policies?','Pricing and booking terms are shown for your selected stay. Review the rental agreement and cancellation policy before completing your reservation.')]
+faqs=[('How close is the gondola?','The condo is in River Run Village, less than 700 feet from the River Run Gondola. Walk through the village to reach the lift, dining and shops.'),('Where will everyone sleep?','The one-bedroom condo sleeps up to 4 adults and 1 child, with a king bed, a twin sleeper chair in the bedroom and a pull-out sofa in the living room. There is one full bathroom.'),('Is parking included?','One heated underground garage parking space and a private ski locker are included. An elevator serves the building. Additional vehicles need separate parking arrangements.'),('Where are the pool and hot tubs?','The shared hot tubs are on site at Silvermill. The year-round heated pool is accessed at nearby Dakota Lodge. All shared amenities are subject to building access and maintenance.'),('What are the check-in and check-out times?','Check-in is after 4 PM and check-out is before 10 AM. Arrival instructions are shared with confirmed guests before their stay.'),('Where can I see the rental policies?','Pricing and booking terms are shown for your selected stay. Review the rental agreement and cancellation policy before completing your reservation.')]
 replace(s,'.faq > div:last-child','<div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in faqs)+'</div>')
-replace(s,'.site-footer > div','''<div><a href="https://www.airbnb.com/rooms/1237080165740047360" target="_blank" rel="noopener">View Airbnb listing ↗</a><a href="http://checkin.silvermill8294.com/" target="_blank" rel="noopener">Already booked? Guest guide ↗</a><a href="redhawk.html">Our other Keystone stay: Red Hawk 2240 ↗</a></div>''')
+replace(s,'.site-footer > div','''<div><a href="https://www.airbnb.com/rooms/1237080165740047360" target="_blank" rel="noopener">View Airbnb listing ↗</a><a href="redhawk.html">Our other Keystone stay: Red Hawk 2240 ↗</a></div>''')
 s.select_one('.site-footer > p').string='Silvermill Lodge · River Run · Keystone, Colorado'
 (ROOT/'silvermill.html').write_text(str(s))
 print('Built selected Alpine sites for Red Hawk and Silvermill.')
@@ -67,8 +67,8 @@ for filename in ('redhawk.html','silvermill.html'):
  listing_id='45842208' if filename=='redhawk.html' else '1237080165740047360'
  header.insert_after(BeautifulSoup(f'<aside class="host-trust" aria-label="Your host and Airbnb listing"><p><span aria-hidden="true">✦</span> Hosted by Hope, an Airbnb Superhost</p><a href="https://www.airbnb.com/rooms/{listing_id}" target="_blank" rel="noopener">View {property_name} on Airbnb ↗</a></aside>','html.parser'))
  page.head.append(page.new_tag('link',rel='stylesheet',href='calopi.css'))
- page.select_one('link[rel=icon]')['href']='assets/calopi-favicon.png'
- page.select_one('link[rel=icon]')['type']='image/png'
+ page.select_one('link[rel=icon]')['href']='assets/calopi-monogram.svg'
+ page.select_one('link[rel=icon]')['type']='image/svg+xml'
  for a in page.select('a[href]'):
   href=a['href']
   if href in ('redhawk.html','silvermill.html'):
