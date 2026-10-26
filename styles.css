@@ -11,3 +11,12 @@ body.comparison{--paper:#f5f3ec;--ink:#263c33;--muted:#687469;--accent:#263c33;p
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 
 .summit .summit-book .button{color:#d2ef79}.summit .inquiry-dialog .button{color:#fff;background:#263c33}
+
+/* OwnerRez provides live availability, pricing and secure booking. */
+.booking-provider{width:100%;min-width:0;background:#fff;color:#263b35;padding:clamp(16px,3vw,32px);border-radius:12px;text-align:left}
+.booking-intro{font-size:1rem;margin:0 0 20px;line-height:1.5}
+.ownerrez-widget{width:100%;min-height:420px}
+.ownerrez-widget iframe{width:100%;max-width:100%;border:0}
+.booking-fallback{font-size:.85rem;line-height:1.5;margin:18px 0 0;color:#52625b}
+.booking-fallback a{text-decoration:underline;color:inherit}
+.family-plan .booking-provider{grid-column:1/-1}

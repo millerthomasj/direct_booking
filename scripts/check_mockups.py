@@ -26,22 +26,14 @@ async def main():
     old=await page.locator('.lightbox img').get_attribute('src')
     await page.keyboard.press('ArrowRight');assert await page.locator('.lightbox img').get_attribute('src')!=old
     await page.keyboard.press('Escape');assert not await page.locator('.lightbox').evaluate('(d)=>d.open')
-    arrival=(date.today()+timedelta(days=30)).isoformat();departure=(date.today()+timedelta(days=34)).isoformat()
-    await page.locator('[name=arrival]').fill(arrival)
-    await page.locator('[name=departure]').fill(departure)
-    await page.locator('[name=guests]').select_option('6')
-    await page.locator('.booking-form button').click()
-    assert '4 nights · 6 guests' in await page.locator('.stay-summary').inner_text()
-    assert f'check_in={arrival}' in await page.locator('.airbnb-link').get_attribute('href')
-    assert 'does not check availability' in await page.locator('.inquiry-dialog').inner_text()
-    await page.keyboard.press('Escape')
-    await page.locator('[name=arrival]').fill((date.today()+timedelta(days=40)).isoformat())
-    assert await page.locator('[name=departure]').input_value()==''
+    widget=page.locator('.ownerrez-widget')
+    assert await widget.get_attribute('data-propertyId')=='bc7244c04d284b70baab4dede8d52fb0'
+    assert 'app.ownerrez.com/widgets/' in await page.locator('.booking-fallback a').get_attribute('href')
     await page.locator('.faq summary').first.click();assert await page.locator('.faq details').first.get_attribute('open') is not None
     if concept=='summit':
      await page.locator('[data-season=summer]').click();assert await page.locator('[data-season=summer]').get_attribute('aria-pressed')=='true';assert 'Long days.' in await page.locator('.season-title').inner_text();assert 'photo-00' in await page.locator('.season-image').get_attribute('src')
     assert not errors,(concept,label,errors)
-    assert not failures,(concept,label,failures)
+    assert not [u for u in failures if 'app.ownerrez.com' not in u],(concept,label,failures)
     await page.close()
   page=await browser.new_page(viewport={'width':1440,'height':1100})
   await page.goto('http://127.0.0.1:8124/',wait_until='networkidle')
@@ -49,5 +41,5 @@ async def main():
   for link in ('alpine.html','gatherings.html','summit.html'):assert await page.locator(f'a[href="{link}"]').count()==1
   await page.set_viewport_size({'width':390,'height':844});assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   await browser.close()
- print('PASS: six desktop/mobile concept flows; local photos/fonts; galleries; keyboard close; dates, guests and summaries; FAQ; seasons; comparison navigation.')
+ print('PASS: six desktop/mobile concept flows; local photos/fonts; galleries; keyboard close; OwnerRez embed and fallback; FAQ; seasons; comparison navigation.')
 if __name__=='__main__':asyncio.run(main())
