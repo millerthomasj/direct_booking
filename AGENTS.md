@@ -170,28 +170,24 @@ assets, canonical, no accidental noindex, and relevant links / OwnerRez property
 key. Follow CloudFront deployment/invalidation status when investigating stale
 content. Keep the runbook and migration state current if infrastructure changes.
 
-## Outstanding migration at last update — 2026-10-26
+## DNS migration completed — 2026-10-26
 
-- Calopi Haven and Silvermill registrar nameservers were switched to Route 53;
-  the parent `.com` delegation was verified. Recheck live DNS rather than assume
-  a historical propagation state is still current.
-- **Red Hawk's final NS change is pending**, because its previous DNSSEC DS had
-  an 86400-second TTL. Old DS absence was confirmed by October 26 at 19:00 UTC.
-- The guarded finalization command is safe **after October 27, 2026 at 1 PM
-  Costa Rica time (19:00 UTC)**, with the authenticated Squarespace Chrome tab:
-
-```sh
-python scripts/finish_redhawk_dns.py          # inspect plan only
-python scripts/finish_redhawk_dns.py --apply  # time/DS/preservation guarded
-```
-
-This step was authorized in the original deployment task but is not scheduled.
-Check current migration JSON and actual registrar delegation first; do not redo
-it if already completed. After completing it, update this section and the runbook.
-Do not restart the 24-hour hold unless a new DS record was actually introduced.
+- All three registrar delegations now use Route 53. Red Hawk’s nameservers were
+  switched October 26 at the owner’s explicit request to proceed early despite
+  the old DNSSEC cache risk. The `.com` parent delegation was verified on AWS.
+- There is **no remaining scheduled or pending Red Hawk cutover**. Do not redo it.
+- The original DNSSEC safety deadline remains October 27, 2026 at 1 PM Costa Rica
+  (19:00 UTC). Until then, resolvers caching the old DS can temporarily fail.
+  The parent DS is absent; no new DS was published. Do not re-enable DNSSEC
+  without deliberately configuring signing and a matching DS.
+- Registrar results, explicit early-risk acceptance and verification are in
+  `infrastructure/dns-migration.json`. All preserved email/verification records,
+  direct custom-domain HTTPS and the existing guest-guide redirect were checked.
+- `scripts/finish_redhawk_dns.py` retains its default time guard. Its explicit
+  `--accept-dnssec-cache-risk` override was used for this owner-authorized cutover.
 
 Old Squarespace apex/www forwarding points to each AWS endpoint as a temporary
-bridge for cached DNS, and for Red Hawk during its hold. A response with
+bridge for cached DNS, and while old delegations remain cached. A response with
 `Server: Squarespace` and a 302 to CloudFront is this old-DNS path, **not** the
 final AWS root-domain behavior. Calopi's correct AWS response is HTTP 200 at its
 own hostname with no Location header. Do not disable the fallback while old DNS

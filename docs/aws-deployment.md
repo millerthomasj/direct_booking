@@ -32,12 +32,15 @@ The earlier six-name pending certificate created during setup was deleted.
 - **Calopi Haven:** Squarespace accepted Route 53 nameservers at
   `2026-10-26T19:00:54Z`. Parent `.com` delegation verified on AWS.
 - **Silvermill:** accepted at `2026-10-26T19:00:56Z`. Parent delegation verified.
-- **Red Hawk:** AWS site, certificate, aliases, records and guest-guide redirect
-  are ready. Existing DNS remains at Squarespace pending the old DNSSEC DS TTL.
-  DNSSEC was disabled at `2026-10-26T18:56:13Z`; DS absence was subsequently
-  confirmed at the parent. Original DS TTL was **86400 seconds**. Do not switch
-  nameservers before **October 27, 2026, 1 PM Costa Rica / 19:00 UTC**.
-  This final switch is staged, **not automatically scheduled**.
+- **Red Hawk:** registrar nameservers switched to Route 53 on October 26 at the
+  owner’s explicit request to proceed before the DNSSEC cache deadline. The
+  `.com` parent now delegates to the four AWS nameservers. All seven preserved
+  email/verification recordsets, HTTPS 200 at the custom hostname through
+  CloudFront, and the original Canva guest-guide redirect were verified.
+- The old DS record remains absent. Its previous 86400-second TTL means some
+  resolvers may temporarily fail until October 27 at 1 PM Costa Rica / 19:00 UTC.
+  The owner accepted this risk because expected traffic is negligible. The
+  authorization and registrar response are recorded in `dns-migration.json`.
 
 Email, DKIM, SPF, Google verification and Domain Connect recordsets were copied
 from the authenticated Squarespace inventory before any delegation changes.
@@ -49,8 +52,7 @@ No email messages were sent as part of verification.
 
 The original Squarespace apex and www forwarding destinations now point to each
 site's AWS endpoint instead of Airbnb. This is a **temporary bridge for cached
-old DNS**, and also lets Red Hawk's existing domain reach its new site during
-the DNSSEC hold. Requests that reach Squarespace can therefore show a 302 to
+old DNS**, and keeps visitors using old DNS connected during propagation. Requests that reach Squarespace can therefore show a 302 to
 `*.cloudfront.net` while caches expire. The actual root-domain configuration on
 AWS serves HTTP 200 directly; Calopi/Silvermill www redirect to their root names.
 Red Hawk currently serves both root and www with a root canonical URL.
@@ -68,20 +70,19 @@ curl -I --connect-to calopihaven.com:443:dvte5np9w3can.cloudfront.net:443 https:
 That request was verified as HTTP 200 with the Calopi page and no Location header.
 Do not copy a currently resolved CloudFront IP into a permanent DNS A record.
 
-## Final Red Hawk nameserver step
+## Red Hawk cutover completed
 
-After the DNSSEC hold expires, with the owner's authenticated Squarespace tab
-open in Google Chrome:
+No further nameserver switch is needed. The owner-authorized early switch used:
 
 ```sh
-python scripts/finish_redhawk_dns.py          # inspect only
-python scripts/finish_redhawk_dns.py --apply  # guarded cutover
+python scripts/finish_redhawk_dns.py --apply --accept-dnssec-cache-risk
 ```
 
-The script checks the time, absence of the parent DS, the AWS account and all
-preserved email records before updating the registrar. It uses the active
-browser session without storing credentials. Then verify parent NS delegation,
-HTTPS, MX/TXT and the guest guide. Its assigned nameservers are:
+The script verified the AWS account, copied email records, that registrar
+DNSSEC was disabled and absence of the parent DS before updating nameservers, then verified
+what the registrar stored. Its normal time guard remains in place without the
+explicit risk-acceptance flag. The parent delegation was checked afterward.
+Red Hawk nameservers:
 
 - ns-1849.awsdns-39.co.uk
 - ns-1499.awsdns-59.org

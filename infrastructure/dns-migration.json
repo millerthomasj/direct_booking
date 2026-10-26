@@ -91,7 +91,7 @@
     "time": "2026-10-26T18:56:13.146Z"
   },
   "redhawk2240.com": {
-    "status": "aws_hosting_live_via_temporary_redirect; nameserver migration pending DNSSEC cache expiry",
+    "status": "nameservers_updated",
     "dnssec_removed_at": "2026-10-26T18:56:13.146Z",
     "ds_absence_observed_by": "2026-10-26T19:00:00Z",
     "safe_nameserver_cutover_after": "2026-10-27T19:00:00Z",
@@ -101,6 +101,39 @@
       "ns-cloud-a3.googledomains.com",
       "ns-cloud-a4.googledomains.com"
     ],
-    "temporary_forward_target": "https://ddafqpgye8k2a.cloudfront.net/"
+    "temporary_forward_target": "https://ddafqpgye8k2a.cloudfront.net/",
+    "registrar_result": {
+      "status": 200,
+      "after": {
+        "nameServers": [
+          {
+            "hostName": "ns-1849.awsdns-39.co.uk"
+          },
+          {
+            "hostName": "ns-421.awsdns-52.com"
+          },
+          {
+            "hostName": "ns-1499.awsdns-59.org"
+          },
+          {
+            "hostName": "ns-990.awsdns-59.net"
+          }
+        ]
+      },
+      "time": "2026-10-26T19:59:26.909Z"
+    },
+    "early_cutover_authorization": {
+      "accepted_dnssec_cache_risk": true,
+      "reason": "Owner explicitly requested immediate switch despite the previously explained waiting period because traffic is negligible.",
+      "time": "2026-10-26T19:59:26.909Z"
+    },
+    "verification_after_cutover": {
+      "verified_at": "2026-10-26T20:00:07.559277+00:00",
+      "parent_nameservers_match_route53": true,
+      "parent_ds_absent": true,
+      "preserved_recordsets": 7,
+      "custom_hostname_https_via_cloudfront": 200,
+      "guest_guide_canva_redirect_preserved": true
+    }
   }
 }
