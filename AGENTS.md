@@ -75,7 +75,8 @@ Do not treat it as one site with interchangeable booking widgets.
   popup embeds the widget endpoint directly (without `view=form`) to avoid a
   double iframe; the fallback separate link uses the hosted `view=form` page.
   Keep native target=_blank fallback for no-JS/unsupported browsers. “Browse
-  dates first” opens the popup without requiring dates. All runtime calendar,
+  dates first” opens the popup without requiring dates, but carries any dates
+  and guest counts already selected. Keep generous padding inside the popup. All runtime calendar,
   rates and Book Now behavior belongs to the live widget. No API key is needed.
   For booking changes, verify real quotes/calendar fields as well as mocked
   navigation tests. The provider rejects localhost referrers: test with the

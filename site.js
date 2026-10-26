@@ -9,6 +9,11 @@
   const openBookingWidget=hostedUrl=>{
     if(!bookingDialog||typeof bookingDialog.showModal!=='function')return false;
     const url=new URL(hostedUrl);
+    // Every entry point uses the latest selections, including Browse dates first.
+    const selectedForm=document.querySelector('.booking-form');
+    if(selectedForm)new FormData(selectedForm).forEach((value,key)=>{
+      if(String(value).trim())url.searchParams.set(key,value);
+    });
     const fallback=bookingDialog.querySelector('.booking-dialog-fallback');
     fallback.href=url.href;
     // Load the embeddable widget directly, not the hosted page's wrapper iframe.

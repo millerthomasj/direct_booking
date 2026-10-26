@@ -39,3 +39,8 @@ body.comparison{--paper:#f5f3ec;--ink:#263c33;--muted:#687469;--accent:#263c33;p
 @media(max-width:600px){.booking-dialog{max-width:calc(100% - 16px)}}
 .faq .parking-options-link{text-decoration:underline;text-underline-offset:3px}
 .brand .calopi-logo{width:60px;height:42px;object-fit:contain;mix-blend-mode:multiply}
+
+/* Give the live form breathing room inside the popup. */
+.booking-widget-scroll{padding:24px 32px 28px}.booking-dialog-header{padding:22px 72px 20px 32px}.booking-dialog-fallback{padding:13px 32px}
+@media(max-width:600px){.booking-widget-scroll{padding:20px 20px 24px}.booking-dialog-header{padding:18px 60px 16px 20px}.booking-dialog-fallback{padding:12px 20px}}
+@media(max-width:350px){.booking-widget-scroll{padding:18px 16px 22px}.booking-dialog-header{padding-left:16px}.booking-dialog-fallback{padding-inline:16px}}

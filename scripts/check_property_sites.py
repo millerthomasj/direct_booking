@@ -50,7 +50,9 @@ async def main():
     await page.locator('[data-booking-window]').click()
     assert await dialog.evaluate('(e)=>e.open')
     q=parse_qs(urlparse(await dialog.locator('iframe').get_attribute('src')).query)
-    assert 'or_arrival' not in q and q['propertyKey']==[key]
+    assert q['or_arrival']==[arrival] and q['or_departure']==[departure] and q['propertyKey']==[key]
+    if name=='redhawk':assert q['or_guests']==[str(guests)]
+    else:assert q['or_adults']==['4'] and q['or_children']==['1']
     await page.keyboard.press('Escape')
     assert not await dialog.evaluate('(e)=>e.open')
     assert page.url.endswith(name+'.html')
