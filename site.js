@@ -1,4 +1,8 @@
 (() => {
+  // Custom domains use the public URLs; review hosts keep the full preview navigable.
+  if(['millerthomasj.github.io','localhost','127.0.0.1'].includes(location.hostname)){
+    document.querySelectorAll('a[data-preview-path]').forEach(a=>a.setAttribute('href',a.dataset.previewPath));
+  }
   const localDate=date=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
   const nextDay=value=>{const d=new Date(value+'T12:00:00');d.setDate(d.getDate()+1);return localDate(d)};
   document.querySelectorAll('.booking-form').forEach(form=>{

@@ -10,7 +10,7 @@ def selected():
  s.body['class'].append('selected-site')
  s.title.string='Red Hawk 2240 | A mountain stay in Keystone'
  s.select_one('meta[name=description]')['content']='Stay at Red Hawk 2240 in Keystone: two bedrooms, space for six, a pool and hot tubs near River Run. Check dates and book through OwnerRez.'
- for a in s.select('.brand'):a['href']='index.html'
+ for a in s.select('.brand'):a['href']='redhawk.html'
  s.select_one('.site-footer > div').append(BeautifulSoup('<a href="silvermill.html">Our other Keystone stay: Silvermill 8294 ↗</a>','html.parser'))
  return s
 
@@ -21,7 +21,7 @@ def photo(n,alt):
 def replace(s,selector,html):
  s.select_one(selector).replace_with(BeautifulSoup(html,'html.parser'))
 
-red=selected();(ROOT/'index.html').write_text(str(red))
+red=selected();(ROOT/'redhawk.html').write_text(str(red))
 s=selected()
 # Replace property names, public links and OwnerRez identifiers before setting property-specific content.
 s=BeautifulSoup(str(s).replace('RED HAWK','SILVERMILL').replace('Red Hawk','Silvermill').replace('2240','8294').replace('45842208','1237080165740047360').replace('checkin.redhawk8294.com','checkin.silvermill8294.com').replace('https://checkin.silvermill8294.com','http://checkin.silvermill8294.com/').replace('f13cd4d5594545a4b410a094355b8b4d','c10114d38806484bbd3c7bfd9bf4858e').replace('bc7244c04d284b70baab4dede8d52fb0','3f15f3b1b0f548328ab5276d7014358a'),'html.parser')
@@ -43,7 +43,18 @@ replace(s,'.gallery-grid','<div class="gallery-grid">'+''.join(photo(n,a) for n,
 s.select_one('.gallery-section .section-top > p').clear();s.select_one('.gallery-section .section-top > p').append(BeautifulSoup('Your River Run retreat.<br/>A few very good places to unwind.','html.parser'))
 faqs=[('How close is the gondola?','The condo is in River Run Village, less than 700 feet from the River Run Gondola. Walk through the village to reach the lift, dining and shops.'),('Where will everyone sleep?','The one-bedroom condo sleeps up to five, with a king bed, a twin sleeper chair in the bedroom and a pull-out sofa in the living room. There is one full bathroom.'),('Is parking included?','One heated underground garage parking space and a private ski locker are included. An elevator serves the building. Additional vehicles need separate parking arrangements.'),('Where are the pool and hot tubs?','The shared hot tubs are on site at Silvermill. The year-round heated pool is accessed at nearby Dakota Lodge. All shared amenities are subject to building access and maintenance.'),('What are the check-in and check-out times?','Check-in is after 4 PM and check-out is before 10 AM. Already booked? Use the guest guide linked below for arrival instructions.'),('Where can I see the rental policies?','OwnerRez shows the applicable pricing and booking terms for your selected stay. Review the rental agreement and cancellation policy before completing your reservation.')]
 replace(s,'.faq > div:last-child','<div>'+''.join(f'<details><summary>{q}</summary><p>{a}</p></details>' for q,a in faqs)+'</div>')
-replace(s,'.site-footer > div','''<div><a href="https://www.airbnb.com/rooms/1237080165740047360" target="_blank" rel="noopener">View Airbnb listing ↗</a><a href="http://checkin.silvermill8294.com/" target="_blank" rel="noopener">Already booked? Guest guide ↗</a><a href="index.html">Our other Keystone stay: Red Hawk 2240 ↗</a></div>''')
+replace(s,'.site-footer > div','''<div><a href="https://www.airbnb.com/rooms/1237080165740047360" target="_blank" rel="noopener">View Airbnb listing ↗</a><a href="http://checkin.silvermill8294.com/" target="_blank" rel="noopener">Already booked? Guest guide ↗</a><a href="redhawk.html">Our other Keystone stay: Red Hawk 2240 ↗</a></div>''')
 s.select_one('.site-footer > p').string='Silvermill Lodge · River Run · Keystone, Colorado'
 (ROOT/'silvermill.html').write_text(str(s))
 print('Built selected Alpine sites for Red Hawk and Silvermill.')
+
+# Public domain links retain working counterparts on the GitHub Pages preview.
+for filename in ('redhawk.html','silvermill.html'):
+ page=BeautifulSoup((ROOT/filename).read_text(),'html.parser')
+ for a in page.select('a[href]'):
+  href=a['href']
+  if href in ('redhawk.html','silvermill.html'):
+   a['data-preview-path']=href
+   a['href']='https://'+('redhawk2240.com' if href=='redhawk.html' else 'silvermill8294.com')+'/'
+ page.select_one('.site-footer > div').append(BeautifulSoup('<a href="https://calopihaven.com/" data-preview-path="index.html">Calopi Haven · All our stays ↗</a>','html.parser'))
+ (ROOT/filename).write_text(str(page))
