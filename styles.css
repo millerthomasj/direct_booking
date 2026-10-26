@@ -37,3 +37,4 @@ body.comparison{--paper:#f5f3ec;--ink:#263c33;--muted:#687469;--accent:#263c33;p
 
 .booking-dialog{max-width:calc(100% - 32px)}.booking-widget-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;background:#fff}.booking-widget-frame{display:block;flex:none;min-height:0;height:1200px}
 @media(max-width:600px){.booking-dialog{max-width:calc(100% - 16px)}}
+.faq .parking-options-link{text-decoration:underline;text-underline-offset:3px}
