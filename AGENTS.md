@@ -159,7 +159,10 @@ For **every production deployment**, build fresh production packages:
 python scripts/build_domains.py --production
 ```
 
-The production flag removes preview noindex, sets each site's own canonical and
+The production flag creates content-hashed CSS/JS filenames so browser caches
+cannot retain obsolete popup code or spacing. HTML is deployed with no-cache
+and must-revalidate; do not restore long browser cache lifetimes for HTML or
+remove asset fingerprinting. It also removes preview noindex, sets canonical and
 social URLs, generates robots.txt/sitemap.xml, and makes guest-guide URLs HTTPS.
 Do not upload preview/noindex packages or reuse stale `dist/` after edits.
 

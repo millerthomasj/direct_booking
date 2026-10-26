@@ -1,6 +1,7 @@
 """Package the three static domains with the appropriate root page."""
 from pathlib import Path
 import shutil
+import hashlib
 import argparse
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
@@ -12,11 +13,21 @@ for domain,page in [('calopihaven.com','index.html'),('redhawk2240.com','redhawk
  if target.exists():shutil.rmtree(target)
  target.mkdir(parents=True)
  shutil.copytree(ROOT/'assets',target/'assets')
- for name in ['styles.css','calopi.css','site.js','calopi.js']:shutil.copy2(ROOT/name,target/name)
+ versioned_assets={}
+ for name in ['styles.css','calopi.css','site.js','calopi.js']:
+  shutil.copy2(ROOT/name,target/name)
+  if args.production:
+   asset=Path(name);digest=hashlib.sha256((ROOT/name).read_bytes()).hexdigest()[:12]
+   versioned_assets[name]=f'{asset.stem}.{digest}{asset.suffix}'
+   shutil.copy2(ROOT/name,target/versioned_assets[name])
  shutil.copy2(ROOT/page,target/'index.html')
  if args.production:
   document=BeautifulSoup((target/'index.html').read_text(),'html.parser')
   document.select_one('meta[name=robots]').decompose()
+  # New content gets a new URL: browser caches cannot retain old popup code/CSS.
+  for tag,attribute in [('script','src'),('link','href')]:
+   for element in document.select(f'{tag}[{attribute}]'):
+    if element[attribute] in versioned_assets:element[attribute]=versioned_assets[element[attribute]]
   canonical='https://'+domain+'/'
   document.head.append(document.new_tag('link',rel='canonical',href=canonical))
   image='assets/keystone-schoolmarm.webp' if domain=='calopihaven.com' else 'assets/photo-01.webp' if domain=='redhawk2240.com' else 'assets/silvermill/08.webp'

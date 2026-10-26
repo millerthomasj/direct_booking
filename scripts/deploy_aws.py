@@ -15,7 +15,7 @@ for name,domain in [('Calopi','calopihaven.com'),('RedHawk','redhawk2240.com'),(
  directory=ROOT/'dist'/domain;assert (directory/'index.html').exists()
  def upload(path):
   content=path.read_bytes();key=domain+'/'+str(path.relative_to(directory));digest=hashlib.sha256(content).hexdigest()
-  s3.put_object(Bucket=bucket,Key=key,Body=content,ContentType=mimetypes.guess_type(str(path))[0] or 'application/octet-stream',CacheControl='public,max-age='+('300' if path.suffix in ['.html','.xml','.txt'] else '86400'),Metadata={'sha256':digest})
+  s3.put_object(Bucket=bucket,Key=key,Body=content,ContentType=mimetypes.guess_type(str(path))[0] or 'application/octet-stream',CacheControl=('no-cache,max-age=0,must-revalidate' if path.suffix=='.html' else 'public,max-age=300' if path.suffix in ['.xml','.txt'] else 'public,max-age=86400'),Metadata={'sha256':digest})
  files=[x for x in directory.rglob('*') if x.is_file()]
  with ThreadPoolExecutor(8) as executor:list(executor.map(upload,files))
  invalidation=cf.create_invalidation(DistributionId=outputs[name+'DistributionId'],InvalidationBatch={'Paths':{'Quantity':1,'Items':['/*']},'CallerReference':'calopi-'+str(time.time_ns())})

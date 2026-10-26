@@ -65,8 +65,10 @@ async def main():
   await page.close()
   # Serve the prepared files under their production hostnames without changing DNS.
   page=await browser.new_page()
+  legacy_asset_requests=[]
   async def serve(route):
    u=urlparse(route.request.url);path=ROOT/'dist'/u.hostname/(u.path.lstrip('/') or 'index.html')
+   if u.path in ['/site.js','/styles.css','/calopi.css','/calopi.js']:legacy_asset_requests.append(u.path)
    await route.fulfill(path=str(path),content_type=mimetypes.guess_type(str(path))[0] or 'application/octet-stream')
   await page.route('https://calopihaven.com/**',serve)
   await page.route('https://redhawk2240.com/**',serve)
@@ -77,6 +79,7 @@ async def main():
    await link.click();assert urlparse(page.url).hostname==domain
    assert await page.locator('.booking-form').count()==1
    await page.locator('a[href="https://calopihaven.com/"]').first.click()
+  assert not legacy_asset_requests,legacy_asset_requests
   await browser.close()
  print('PASS: Calopi at 1440/768/390/320px, both preview property journeys, both production domain journeys, correct OwnerRez properties, slider controls, autoplay, pause and reduced motion.')
 if __name__=='__main__':asyncio.run(main())
