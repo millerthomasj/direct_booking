@@ -25,6 +25,9 @@ Do not treat it as one site with interchangeable booking widgets.
   `https://millerthomasj.github.io/direct_booking/`.
 - Public HTML uses actual domain links. `data-preview-path` plus `site.js` maps
   them to local pages only on localhost / GitHub Pages. Preserve both routes.
+- Typography: keep small labels/captions at least 12px, body copy around 16–17px,
+  and phone date/select inputs at 16px. The user found the previous tiny text
+  difficult to read; do not restore it to fit layouts. Adjust wrapping instead.
 - Main page design: Keystone skiing headline photo; make the two choices and
   their differences clear immediately. Avoid long generic hospitality copy
   above the property choices. Retain photo attribution/license links.
