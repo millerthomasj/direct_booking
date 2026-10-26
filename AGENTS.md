@@ -42,6 +42,9 @@ Do not treat it as one site with interchangeable booking widgets.
   Main-page motion lives in `calopi.js`: sliding hero photos, manual controls,
   pause and reduced-motion support; subtle scroll reveals. Keep photography and
   reviews central, with readable text and clear links to both properties.
+- All three live pages mention Hope’s Airbnb Superhost status and link directly
+  to the relevant Airbnb listing(s). Both statuses were verified October 26,
+  2026 in the owner browser. Keep these visible alongside direct booking.
 - Guest review provenance: `docs/guest-review-sources.json`. Use verified short
   excerpts with guest first name, property, month/year and Airbnb source links.
   Ratings/counts are dated snapshots; verify before updating. Do not invent a
