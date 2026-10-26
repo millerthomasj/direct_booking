@@ -85,3 +85,9 @@
 .host-trust{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px max(48px,calc((100vw - 1216px)/2));background:#e5e8df;color:#263e33;border-top:1px solid #263e3315;font-size:14px;line-height:1.7}.host-trust p{display:flex;align-items:center;gap:10px;margin:0}.host-trust a{text-decoration:underline;text-underline-offset:4px;flex-shrink:0}
 @media(max-width:1000px){.host-trust{padding-inline:25px}.airbnb-listing-link{margin-left:0;display:table}}
 @media(max-width:600px){.superhost-note{max-width:none}.host-trust{flex-direction:column;align-items:flex-start;gap:7px;padding:13px 16px;font-size:14px}.host-trust p{gap:8px}.host-trust a{margin-left:25px;flex-shrink:1}}
+/* Tighter shared header and host strip, with readable type and roomy controls. */
+.haven-header{min-height:0;padding-block:8px}
+.property-header .haven-brand .property-identity{margin-top:4px;line-height:1.4}
+.host-trust{padding-block:6px}
+.host-trust p>span{line-height:1}
+@media(max-width:600px){.haven-header,.property-header{padding-block:6px}.host-trust{padding-block:7px;gap:3px}}
