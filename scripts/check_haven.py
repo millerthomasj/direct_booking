@@ -22,9 +22,47 @@ async def main():
     assert key==('bc7244c04d284b70baab4dede8d52fb0' if filename=='redhawk.html' else '3f15f3b1b0f548328ab5276d7014358a')
     await page.locator('a[data-preview-path="index.html"]').click()
     assert await page.locator('.haven-property').count()==2
+   # Exercise the photo controls and reveal all content before capturing previews.
+   slider=page.locator('[data-slider]')
+   await slider.locator('[data-next]').click()
+   assert await slider.get_attribute('data-active-slide')=='1'
+   assert 'RED HAWK' in await slider.locator('.slider-caption').inner_text()
+   await slider.press('ArrowRight')
+   assert await slider.get_attribute('data-active-slide')=='2'
+   await slider.locator('[data-prev]').click()
+   assert await slider.get_attribute('data-active-slide')=='1'
+   await slider.locator('.slider-dots button').first.click()
+   assert await slider.get_attribute('data-active-slide')=='0'
+   await slider.locator('[data-pause]').click()
+   assert await slider.locator('[data-pause]').get_attribute('aria-pressed')=='true'
+   for y in range(0,await page.evaluate('document.documentElement.scrollHeight'),650):
+    await page.evaluate('(y)=>window.scrollTo({top:y,behavior:"instant"})',y)
+    await page.wait_for_timeout(100)
+   await page.evaluate('window.scrollTo({top:0,behavior:"instant"})')
+   await page.wait_for_timeout(1000)
+   assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
    await page.screenshot(path=str(ROOT/f'previews/calopi-{width}.jpg'),type='jpeg',quality=88,full_page=True)
    assert not errors,errors
    await page.close()
+  # Autoplay advances and respects an explicit pause; reduced motion starts static.
+  page=await browser.new_page()
+  await page.goto('http://127.0.0.1:8124/',wait_until='networkidle')
+  await page.wait_for_function('document.querySelector("[data-slider]").dataset.activeSlide === "1"',timeout=8500)
+  await page.locator('[data-pause]').click()
+  await page.mouse.move(0,0)
+  await page.locator('[data-pause]').evaluate('(e)=>e.blur()')
+  await page.wait_for_timeout(6800)
+  assert await page.locator('[data-slider]').get_attribute('data-active-slide')=='1'
+  await page.close()
+  page=await browser.new_page(reduced_motion='reduce')
+  await page.goto('http://127.0.0.1:8124/',wait_until='networkidle')
+  assert await page.locator('[data-pause]').is_hidden()
+  assert await page.locator('.slider-track').evaluate('(e)=>getComputedStyle(e).transitionDuration')=='0s'
+  await page.wait_for_timeout(6800)
+  assert await page.locator('[data-slider]').get_attribute('data-active-slide')=='0'
+  await page.locator('[data-next]').click()
+  assert await page.locator('[data-slider]').get_attribute('data-active-slide')=='1'
+  await page.close()
   # Serve the prepared files under their production hostnames without changing DNS.
   page=await browser.new_page()
   async def serve(route):
@@ -40,5 +78,5 @@ async def main():
    assert await page.locator('.booking-form').count()==1
    await page.locator('a[href="https://calopihaven.com/"]').click()
   await browser.close()
- print('PASS: Calopi at 1440/768/390/320px, both preview property journeys, both production domain journeys and correct OwnerRez properties.')
+ print('PASS: Calopi at 1440/768/390/320px, both preview property journeys, both production domain journeys, correct OwnerRez properties, slider controls, autoplay, pause and reduced motion.')
 if __name__=='__main__':asyncio.run(main())

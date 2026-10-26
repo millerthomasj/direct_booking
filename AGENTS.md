@@ -33,6 +33,11 @@ Do not treat it as one site with interchangeable booking widgets.
   the brand toward “why book one of our condos,” supported by real guest reviews.
   Keep the Keystone skiing headline photo, clear summaries of both property
   choices near the top, and the detailed comparison below. Retain photo credits.
+- Calopi means Caleb, Loreli and Pippa, the owners’ three children. The abstract
+  three-peak mark is `assets/calopi-mark.svg`, with a matching Calopi-only favicon.
+  Main-page motion lives in `calopi.js`: sliding hero photos, manual controls,
+  pause and reduced-motion support; subtle scroll reveals. Keep photography and
+  reviews central, with readable text and clear links to both properties.
 - Guest review provenance: `docs/guest-review-sources.json`. Use verified short
   excerpts with guest first name, property, month/year and Airbnb source links.
   Ratings/counts are dated snapshots; verify before updating. Do not invent a

@@ -12,7 +12,7 @@ for domain,page in [('calopihaven.com','index.html'),('redhawk2240.com','redhawk
  if target.exists():shutil.rmtree(target)
  target.mkdir(parents=True)
  shutil.copytree(ROOT/'assets',target/'assets')
- for name in ['styles.css','calopi.css','site.js']:shutil.copy2(ROOT/name,target/name)
+ for name in ['styles.css','calopi.css','site.js','calopi.js']:shutil.copy2(ROOT/name,target/name)
  shutil.copy2(ROOT/page,target/'index.html')
  if args.production:
   document=BeautifulSoup((target/'index.html').read_text(),'html.parser')
