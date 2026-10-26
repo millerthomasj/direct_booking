@@ -14,3 +14,7 @@ body.comparison{--paper:#f5f3ec;--ink:#263c33;--muted:#687469;--accent:#263c33;p
 
 .booking-handoff{font-size:.8rem;line-height:1.5;opacity:.75;margin:12px 0 0}
 .family-plan .booking-handoff{grid-column:1/-1}
+.selected-site{padding-bottom:0}
+.selected-site .site-footer>div{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+@media(min-width:901px){.booking-form[data-max-guests]{grid-template-columns:1fr 1fr .7fr .7fr 1.2fr}}
+@media(max-width:900px){.booking-form[data-max-guests] .button{grid-column:1/-1}}

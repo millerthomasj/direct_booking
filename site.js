@@ -7,6 +7,7 @@
     arrival.addEventListener('change',()=>{departure.min=nextDay(arrival.value||arrival.min);if(departure.value&&departure.value<departure.min)departure.value='';error.textContent=''});
     form.addEventListener('submit',event=>{
       error.textContent='';
+      if(form.dataset.maxGuests && Number(form.elements.or_adults.value)+Number(form.elements.or_children.value)>Number(form.dataset.maxGuests)){event.preventDefault();error.textContent='Silvermill accommodates up to five guests in total.';return;}
       if(!arrival.value||!departure.value||arrival.value<arrival.min||departure.value<=arrival.value){event.preventDefault();error.textContent='Choose a future check-in date and a later check-out date.';}
     });
   });

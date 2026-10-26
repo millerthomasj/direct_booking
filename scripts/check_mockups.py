@@ -47,7 +47,7 @@ async def main():
     assert not [u for u in failures if 'app.ownerrez.com' not in u],(concept,label,failures)
     await page.close()
   page=await browser.new_page(viewport={'width':1440,'height':1100})
-  await page.goto('http://127.0.0.1:8124/',wait_until='networkidle')
+  await page.goto('http://127.0.0.1:8124/concepts.html',wait_until='networkidle')
   await page.screenshot(path=str(ROOT/'previews/comparison.jpg'),type='jpeg',quality=90,full_page=True)
   for link in ('alpine.html','gatherings.html','summit.html'):assert await page.locator(f'a[href="{link}"]').count()==1
   await page.set_viewport_size({'width':390,'height':844});assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth')

@@ -1,86 +1,63 @@
-# Red Hawk 2240 — direct-booking design concepts
+# Keystone direct-booking sites
 
-Three complete static website mockups for the Keystone, Colorado condo.
-Shareable preview: https://millerthomasj.github.io/direct_booking/
+The selected design is Alpine. GitHub Pages serves Red Hawk at the root and
+Silvermill on its own page:
 
-GitHub Pages serves this review from `main` at the repository root. No custom
-domain was changed. Pages use `noindex,nofollow` while the designs are reviewed.
+- https://millerthomasj.github.io/direct_booking/
+- https://millerthomasj.github.io/direct_booking/silvermill.html
 
-Start at [the comparison page](index.html), or open:
+The original design comparison remains at `concepts.html`. Both selected sites
+use compact date/guest forms that pass selections to the correct OwnerRez hosted
+booking widget. Red Hawk accommodates six; Silvermill accommodates five (at most four adults).
+Silvermill passes separate adult and child counts to match its OwnerRez rules.
+No API keys are stored. Availability, pricing, rental terms and checkout are
+handled by OwnerRez. No inquiry, reservation or payment was submitted in testing.
 
-1. [The Alpine Edit](alpine.html) — forest green/ivory, refined editorial hospitality.
-2. [The Gathering Place](gatherings.html) — warm terracotta/teal, family-oriented.
-3. [Basecamp 2240](summit.html) — charcoal/lime, bold mountain adventure.
+The current custom domains and check-in guides are unchanged. These review URLs
+remain noindex until the custom-domain launch.
 
-[Four-page design review PDF](previews/Red-Hawk-2240-design-review.pdf).
-Desktop, phone and full-page JPGs are in `previews/`.
-
-## Preview
-
-No build or runtime dependencies. Open `index.html` directly, or:
+## Rebuild and preview
 
 ```sh
+python3 scripts/build_mockups.py
+python3 scripts/build_property_sites.py
 python3 -m http.server 8124 --bind 127.0.0.1
 ```
 
-Then visit http://127.0.0.1:8124. All fonts and photos are local; there are no API keys. The three concepts link to the OwnerRez booking widget with selected dates and guest counts. This mockup does not change
-the existing `www.redhawk2240.com` redirect or `checkin.redhawk2240.com` guide.
-
-## Implemented
-
-Responsive desktop/phone layouts, photo dialogs, FAQs and seasonal controls.
-All three concepts use a compact date/guest selector that opens the full OwnerRez
-hosted booking form with `or_arrival`, `or_departure` and `or_guests` prefilled.
-Availability and pricing are confirmed on OwnerRez; the local date selector does
-not mark unavailable dates. No API key or third-party embed script is required.
-The hosted widget is restricted to Red Hawk 2240.
-
-Widget ID: `f13cd4d5594545a4b410a094355b8b4d` (public identifier).
-No reservations, inquiries or payments were submitted during verification.
-Reference: https://www.ownerrez.com/support/articles/prepopulate-widget-fields
-
-## Sources and content
-
-Inspected the owner's signed-in Airbnb listing editor, listing 45842208, and its
-62-photo tour on October 25, 2026. Public property photos were downloaded and
-optimized to WebP; source URLs/captions are in `docs/photo-sources.json`. The
-current editor confirms six guests, two bedrooms, two bathrooms, pool/two hot
-tubs, private balcony and approximately 900 feet to River Run. Bedroom setup,
-heated garage space, ski locker and other amenities were cross-checked with the
-public listing: https://www.airbnb.com/rooms/45842208.
-
-Inspected the welcome page in the owner's Canva guest guide. No access codes,
-Wi-Fi credentials or private arrival instructions are copied into this repo.
-Photos remain the owner's supplied property material. Outfit font is bundled
-under its OFL license in `assets/outfit-LICENSE.txt`.
-
-No review scores, stale construction notices, fabricated testimonials, rates or
-promised savings are used. Confirm current house rules, bedroom setup and shared
-amenity access before the final launch. New copy is specific to these designs.
-
-## Rebuild and review
-
-`python3 scripts/build_mockups.py` regenerates the three concept HTML files;
-edit its templates for content/layout changes. Shared styles/interactions are
-`styles.css` and `site.js`. The hand-written comparison page is `index.html`.
-
-With Playwright and Pillow installed and the preview server running:
+The selected-site builder needs beautifulsoup4. Browser verification:
 
 ```sh
-python scripts/check_mockups.py
-python scripts/build_review_pdf.py
+python scripts/check_property_sites.py
 ```
 
-The browser check exercises all three concepts at 1440px and 390px, rejects
-horizontal overflow and broken assets, checks photo dialogs/keyboard handling,
-booking dates/guests, FAQs, seasonal controls, and comparison navigation. It
-refreshes the screenshot artifacts; the PDF script packages the review.
-OwnerRez rejects localhost iframe referrers; verify the live form on the HTTPS
-GitHub Pages preview. The hosted-booking fallback also works from local previews.
+This checks both properties at 1440px, 390px and 320px, including image loading,
+photo dialogs, FAQ, guest limits and property-specific OwnerRez URL parameters.
+`check_mockups.py` checks the three archived designs.
 
-## After choosing a design
+## Property sources
 
-The OwnerRez booking integration is connected. Confirm the property's existing
-rates, taxes, rental agreement and payment configuration before sharing broadly,
-then point the real domain at the chosen site. The current domain redirect and
-check-in guide are unchanged.
+Red Hawk: Airbnb listing 45842208 and the owner's guest guide, inspected October
+25, 2026. Photo attribution/source URLs: `docs/photo-sources.json`.
+
+Silvermill: https://www.airbnb.com/rooms/1237080165740047360 and the welcome page
+of the guide linked by http://checkin.silvermill8294.com/, inspected October 26,
+2026. Downloaded listing photos and source URLs are recorded in
+`docs/silvermill-photo-sources.json`. Silvermill is a fifth-floor, one-bedroom,
+one-bath condo for five with a king bed, twin sleeper chair and living-room sofa
+bed. The pool is at nearby Dakota Lodge; hot tubs are at Silvermill. No access
+codes, Wi-Fi credentials or private arrival instructions were copied.
+
+## OwnerRez
+
+- Red Hawk widget: `f13cd4d5594545a4b410a094355b8b4d`
+- Silvermill widget: `c10114d38806484bbd3c7bfd9bf4858e`
+
+Each widget is restricted to its own property and attributes the source to
+"My Website". These IDs are public embed identifiers. Dates and guests use the
+[documented OwnerRez parameters](https://www.ownerrez.com/support/articles/prepopulate-widget-fields).
+The compact native date pickers do not mark booked dates; OwnerRez confirms
+availability and quotes after the guest continues. Dates and occupancy were
+verified against the live Silvermill form without submitting contact details.
+
+Property photographs are the owner's supplied listing material. Outfit font is
+bundled under its OFL license in `assets/outfit-LICENSE.txt`.
