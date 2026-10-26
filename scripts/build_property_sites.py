@@ -51,6 +51,20 @@ print('Built selected Alpine sites for Red Hawk and Silvermill.')
 # Public domain links retain working counterparts on the GitHub Pages preview.
 for filename in ('redhawk.html','silvermill.html'):
  page=BeautifulSoup((ROOT/filename).read_text(),'html.parser')
+ # Reuse the current Calopi header so owner-supplied branding stays consistent.
+ brand_page=BeautifulSoup((ROOT/'index.html').read_text(),'html.parser')
+ header=brand_page.select_one('.haven-header')
+ header['class'].append('property-header')
+ property_name='Red Hawk 2240' if filename=='redhawk.html' else 'Silvermill 8294'
+ identity=header.select_one('.haven-brand small')
+ identity.string=property_name+' · KEYSTONE, COLORADO'
+ identity['class']=['property-identity']
+ header.select_one('nav').clear()
+ header.select_one('nav').append(BeautifulSoup('<a href="#stay">The stay</a><a href="#gallery">Photos</a><a class="haven-outline" href="#book">Check dates ↗</a>','html.parser'))
+ page.select_one('.site-header').replace_with(header)
+ page.head.append(page.new_tag('link',rel='stylesheet',href='calopi.css'))
+ page.select_one('link[rel=icon]')['href']='assets/calopi-favicon.png'
+ page.select_one('link[rel=icon]')['type']='image/png'
  for a in page.select('a[href]'):
   href=a['href']
   if href in ('redhawk.html','silvermill.html'):

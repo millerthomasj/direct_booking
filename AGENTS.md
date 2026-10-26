@@ -17,8 +17,9 @@ Do not treat it as one site with interchangeable booking widgets.
 - Edit property generators, then regenerate; do not make lasting changes only to
   generated `redhawk.html`, `silvermill.html`, or `alpine.html`.
 - `styles.css`, `site.js`, fonts and photo assets are shared. Shared changes need
-  checks across the main site and both properties. `calopi.css` only styles the
-  brand homepage.
+  checks across the main site and both properties. `calopi.css` styles the
+  brand homepage and shared Calopi header on both property sites. Property
+  headers reuse the main logo/wordmark and name the current property below it.
 - Alpine is the selected property design. `gatherings.html`, `summit.html`,
   `concepts.html` and the older review PDF are historical design concepts.
 - GitHub Pages is the **review preview**, not the production hosting target:

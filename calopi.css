@@ -74,3 +74,8 @@
 @media(max-width:1000px){.haven-header .calopi-logo{width:58px;height:62px}}
 @media(max-width:600px){.calopi-logo{width:58px;height:62px}.haven-header .calopi-logo{width:48px;height:52px}}
 @media(max-width:350px){.haven-header .calopi-logo{width:38px;height:42px}.haven-header .haven-brand{gap:7px}}
+
+/* Property pages share the Calopi identity, with the current home named below. */
+.property-header .haven-brand .property-identity{display:block;font-size:12px;letter-spacing:.06em;line-height:1.6;margin-top:9px}
+@media(max-width:600px){.property-header .haven-brand .property-identity{font-size:12px;letter-spacing:.02em;margin-top:7px}.property-header{padding-block:14px}}
+@media(max-width:350px){.property-header .haven-brand .property-identity{max-width:145px}}

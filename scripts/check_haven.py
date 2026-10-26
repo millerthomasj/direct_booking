@@ -20,7 +20,7 @@ async def main():
     assert await page.locator('.booking-form').count()==1
     key=await page.locator('[name=propertyKey]').input_value()
     assert key==('bc7244c04d284b70baab4dede8d52fb0' if filename=='redhawk.html' else '3f15f3b1b0f548328ab5276d7014358a')
-    await page.locator('a[data-preview-path="index.html"]').click()
+    await page.locator('a[data-preview-path="index.html"]').first.click()
     assert await page.locator('.haven-property').count()==2
    # Exercise the photo controls and reveal all content before capturing previews.
    slider=page.locator('[data-slider]')
@@ -76,7 +76,7 @@ async def main():
    link=page.locator(f'.haven-property-actions a[href="https://{domain}/"]')
    await link.click();assert urlparse(page.url).hostname==domain
    assert await page.locator('.booking-form').count()==1
-   await page.locator('a[href="https://calopihaven.com/"]').click()
+   await page.locator('a[href="https://calopihaven.com/"]').first.click()
   await browser.close()
  print('PASS: Calopi at 1440/768/390/320px, both preview property journeys, both production domain journeys, correct OwnerRez properties, slider controls, autoplay, pause and reduced motion.')
 if __name__=='__main__':asyncio.run(main())
