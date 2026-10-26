@@ -39,10 +39,13 @@ Do not treat it as one site with interchangeable booking widgets.
   Keep the Keystone skiing headline photo, clear summaries of both property
   choices near the top. The owner removed the comparison-table section; do not
   restore it or links to #compare. Retain photo credits.
-- Brand presentation: use the simple Calopi Haven text wordmark across all
-  headers. The owner disliked the previous illustrated logo; it is currently
-  unused. Favicon: `assets/calopi-monogram.svg`. Do not publish the children’s
-  names or explain the origin of Calopi.
+- Brand presentation: use the owner-supplied three-mountain logo,
+  `assets/mountains-logo.png`, with the Calopi Haven wordmark across all headers
+  and matching logos in the footers. Favicon: `assets/mountains-favicon.png`.
+  Source `mountains_logo.jpeg` was converted to PNG on the owner’s Desktop; the
+  web version trims only the surrounding canvas. This replaces the older family
+  illustration and text-only phase. Keep headers compact. Do not publish the
+  children’s names or explain the origin of Calopi.
 - Silvermill is hosted, not owned, by Hope & Tom. Do not imply ownership of
   both properties; describe them as the two condos they host.
 - Red Hawk is on the edge of River Run Village, for a slightly quieter stay.
