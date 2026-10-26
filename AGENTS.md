@@ -20,6 +20,10 @@ Do not treat it as one site with interchangeable booking widgets.
   checks across the main site and both properties. `calopi.css` styles the
   brand homepage and shared Calopi header on both property sites. Property
   headers reuse the main logo/wordmark and name the current property below it.
+- Each property hero must show its own living room immediately: Red Hawk uses
+  `assets/photo-01.webp`; Silvermill uses `assets/silvermill/08.webp`. Production
+  social previews use the same property-specific photos. Keep Keystone skiing
+  as the main Calopi hero’s first slide.
 - Alpine is the selected property design. `gatherings.html`, `summit.html`,
   `concepts.html` and the older review PDF are historical design concepts.
 - GitHub Pages is the **review preview**, not the production hosting target:

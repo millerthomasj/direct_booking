@@ -9,6 +9,8 @@ def selected():
  s.select_one('.concept-bar').decompose()
  s.body['class'].append('selected-site')
  s.title.string='Red Hawk 2240 | A mountain stay in Keystone'
+ s.select_one('.hero-image')['src']='assets/photo-01.webp'
+ s.select_one('.hero-image')['alt']='Red Hawk 2240 living room with a teal sofa, fireplace and space to gather'
  s.select_one('meta[name=description]')['content']='Stay at Red Hawk 2240 in Keystone: two bedrooms, space for six, a pool and hot tubs near River Run. Check dates and book your stay directly.'
  for a in s.select('.brand'):a['href']='redhawk.html'
  s.select_one('.site-footer > div').append(BeautifulSoup('<a href="silvermill.html">Our other Keystone stay: Silvermill 8294 ↗</a>','html.parser'))
@@ -31,7 +33,7 @@ for a in s.select('.brand'):a['href']='silvermill.html'
 form=s.select_one('.booking-form');form['data-max-guests']='5';form['data-max-adults']='4';form['data-max-children']='1'
 guest_label=s.select_one('select[name=or_guests]').parent
 guest_label.replace_with(BeautifulSoup('<label>ADULTS<select name="or_adults" aria-label="Adults">'+''.join(f'<option value="{i}" {"selected" if i==2 else ""}>{i} adult{"s" if i>1 else ""}</option>' for i in range(1,5))+'</select></label><label>CHILDREN<select name="or_children" aria-label="Children">'+''.join(f'<option value="{i}">{i} child{"ren" if i!=1 else ""}</option>' for i in range(2))+'</select></label>','html.parser'))
-replace(s,'.hero-image',image(81,'Snow-covered River Run Village and Keystone mountains at dusk',True))
+replace(s,'.hero-image',image(8,'Silvermill 8294 living room with bright windows, a sectional sofa and mountain-inspired artwork',True))
 s.select_one('.alpine-hero .eyebrow').string='SILVERMILL LODGE · RIVER RUN VILLAGE'
 s.select_one('h1').clear();s.select_one('h1').append(BeautifulSoup('A little closer<br/>to <em>everything.</em>','html.parser'))
 s.select_one('.alpine-hero-copy > p:not(.eyebrow)').clear();s.select_one('.alpine-hero-copy > p:not(.eyebrow)').append(BeautifulSoup('Village mornings. Mountain days.<br/>Your own place in the middle of it all.','html.parser'))

@@ -19,7 +19,7 @@ for domain,page in [('calopihaven.com','index.html'),('redhawk2240.com','redhawk
   document.select_one('meta[name=robots]').decompose()
   canonical='https://'+domain+'/'
   document.head.append(document.new_tag('link',rel='canonical',href=canonical))
-  image='assets/keystone-schoolmarm.webp' if domain=='calopihaven.com' else 'assets/photo-00.webp' if domain=='redhawk2240.com' else 'assets/silvermill/81.webp'
+  image='assets/keystone-schoolmarm.webp' if domain=='calopihaven.com' else 'assets/photo-01.webp' if domain=='redhawk2240.com' else 'assets/silvermill/08.webp'
   for key,value in {'og:type':'website','og:url':canonical,'og:title':document.title.text,'og:description':document.select_one('meta[name=description]')['content'],'og:image':canonical+image,'twitter:card':'summary_large_image'}.items():
    tag=document.new_tag('meta',attrs={'property' if key.startswith('og:') else 'name':key,'content':value});document.head.append(tag)
   for anchor in document.select('a[href]'):
