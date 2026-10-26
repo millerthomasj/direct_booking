@@ -97,3 +97,9 @@
 .calopi-logo,.haven-header .calopi-logo{width:66px;height:44px;object-fit:contain}
 @media(max-width:600px){.calopi-logo,.haven-header .calopi-logo{width:48px;height:33px}}
 @media(max-width:350px){.haven-header .calopi-logo{width:36px;height:26px}}
+
+/* Approved centered Superhost and Airbnb strip. */
+.host-trust{justify-content:center;gap:20px;padding:8px 24px;text-align:center}
+.host-strip-separator{font-size:18px;line-height:1;color:#8a9682}
+.host-trust p{justify-content:center}.host-trust a{margin-left:0}
+@media(max-width:600px){.host-trust{align-items:center;flex-direction:column;gap:4px;padding:10px 16px}.host-strip-separator{display:none}.host-trust a{margin-left:0}}

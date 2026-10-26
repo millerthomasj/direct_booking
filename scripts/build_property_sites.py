@@ -65,7 +65,7 @@ for filename in ('redhawk.html','silvermill.html'):
  header.select_one('nav').append(BeautifulSoup('<a href="#stay">The stay</a><a href="#gallery">Photos</a><a class="haven-outline" href="#book">Check dates ↗</a>','html.parser'))
  page.select_one('.site-header').replace_with(header)
  listing_id='45842208' if filename=='redhawk.html' else '1237080165740047360'
- header.insert_after(BeautifulSoup(f'<aside class="host-trust" aria-label="Your host and Airbnb listing"><p><span aria-hidden="true">✦</span> Hosted by Hope, an Airbnb Superhost</p><a href="https://www.airbnb.com/rooms/{listing_id}" target="_blank" rel="noopener">View {property_name} on Airbnb ↗</a></aside>','html.parser'))
+ header.insert_after(BeautifulSoup(f'<aside class="host-trust" aria-label="Your host and Airbnb listing"><p><span aria-hidden="true">✦</span> Hosted by Hope, an Airbnb Superhost</p><span class="host-strip-separator" aria-hidden="true">|</span><a href="https://www.airbnb.com/rooms/{listing_id}" target="_blank" rel="noopener">View {property_name} on Airbnb ↗</a></aside>','html.parser'))
  page.head.append(page.new_tag('link',rel='stylesheet',href='calopi.css'))
  page.select_one('link[rel=icon]')['href']='assets/mountains-favicon-transparent.png'
  page.select_one('link[rel=icon]')['type']='image/png'
