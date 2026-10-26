@@ -40,10 +40,11 @@ Do not treat it as one site with interchangeable booking widgets.
   choices near the top. The owner removed the comparison-table section; do not
   restore it or links to #compare. Retain photo credits.
 - Brand presentation: use the owner-supplied three-mountain logo,
-  `assets/mountains-logo.png`, with the Calopi Haven wordmark across all headers
-  and matching logos in the footers. Favicon: `assets/mountains-favicon.png`.
+  `assets/mountains-logo-transparent.png`, with the Calopi Haven wordmark across all headers
+  and matching logos in the footers. Favicon: `assets/mountains-favicon-transparent.png`.
   Source `mountains_logo.jpeg` was converted to PNG on the owner’s Desktop; the
-  web version trims only the surrounding canvas. This replaces the older family
+  active web PNG removes the background with real alpha transparency; keep it
+  transparent and do not flatten it onto a colored canvas or apply blend modes. This replaces the older family
   illustration and text-only phase. Keep headers compact. Do not publish the
   children’s names or explain the origin of Calopi.
 - Silvermill is hosted, not owned, by Hope & Tom. Do not imply ownership of

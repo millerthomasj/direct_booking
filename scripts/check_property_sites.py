@@ -22,7 +22,7 @@ async def main():
     assert await page.locator('.concept-bar').count()==0
     header=page.locator('.property-header')
     assert await header.locator('.haven-brand').is_visible()
-    assert await header.locator('img.calopi-logo').get_attribute('src')=='assets/mountains-logo.png'
+    assert await header.locator('img.calopi-logo').get_attribute('src')=='assets/mountains-logo-transparent.png'
     assert ('Red Hawk 2240' if name=='redhawk' else 'Silvermill 8294') in await header.locator('.property-identity').inner_text()
     assert await header.locator('.property-identity').is_visible()
     assert await header.locator('a[data-preview-path="index.html"]').get_attribute('href')=='index.html'

@@ -67,7 +67,7 @@ for filename in ('redhawk.html','silvermill.html'):
  listing_id='45842208' if filename=='redhawk.html' else '1237080165740047360'
  header.insert_after(BeautifulSoup(f'<aside class="host-trust" aria-label="Your host and Airbnb listing"><p><span aria-hidden="true">✦</span> Hosted by Hope, an Airbnb Superhost</p><a href="https://www.airbnb.com/rooms/{listing_id}" target="_blank" rel="noopener">View {property_name} on Airbnb ↗</a></aside>','html.parser'))
  page.head.append(page.new_tag('link',rel='stylesheet',href='calopi.css'))
- page.select_one('link[rel=icon]')['href']='assets/mountains-favicon.png'
+ page.select_one('link[rel=icon]')['href']='assets/mountains-favicon-transparent.png'
  page.select_one('link[rel=icon]')['type']='image/png'
  for a in page.select('a[href]'):
   href=a['href']
