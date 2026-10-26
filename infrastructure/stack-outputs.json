@@ -1,0 +1,54 @@
+[
+    {
+        "OutputKey": "RedHawkZoneId",
+        "OutputValue": "Z08767391XDZBRJXZY7X5"
+    },
+    {
+        "OutputKey": "CalopiZoneId",
+        "OutputValue": "Z0033926373ZHUWIOYRP3"
+    },
+    {
+        "OutputKey": "RedHawkNameservers",
+        "OutputValue": "ns-1849.awsdns-39.co.uk, ns-1499.awsdns-59.org, ns-990.awsdns-59.net, ns-421.awsdns-52.com"
+    },
+    {
+        "OutputKey": "CalopiCloudFrontDomain",
+        "OutputValue": "dvte5np9w3can.cloudfront.net"
+    },
+    {
+        "OutputKey": "CalopiNameservers",
+        "OutputValue": "ns-872.awsdns-45.net, ns-1701.awsdns-20.co.uk, ns-1195.awsdns-21.org, ns-189.awsdns-23.com"
+    },
+    {
+        "OutputKey": "SilvermillCloudFrontDomain",
+        "OutputValue": "d1zm64ienf7zps.cloudfront.net"
+    },
+    {
+        "OutputKey": "SilvermillNameservers",
+        "OutputValue": "ns-2018.awsdns-60.co.uk, ns-377.awsdns-47.com, ns-960.awsdns-56.net, ns-1234.awsdns-26.org"
+    },
+    {
+        "OutputKey": "Bucket",
+        "OutputValue": "ticosync-calopihaven-sites-175678592495"
+    },
+    {
+        "OutputKey": "SilvermillZoneId",
+        "OutputValue": "Z05599972IEKPN3C5J3AA"
+    },
+    {
+        "OutputKey": "RedHawkCloudFrontDomain",
+        "OutputValue": "ddafqpgye8k2a.cloudfront.net"
+    },
+    {
+        "OutputKey": "RedHawkDistributionId",
+        "OutputValue": "E25YRLB4R10XHN"
+    },
+    {
+        "OutputKey": "CalopiDistributionId",
+        "OutputValue": "E1DS8J1PE1YDRD"
+    },
+    {
+        "OutputKey": "SilvermillDistributionId",
+        "OutputValue": "EWVFX88JNB0Y9"
+    }
+]

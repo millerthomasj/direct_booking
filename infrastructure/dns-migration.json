@@ -1,0 +1,106 @@
+{
+  "cutovers": {
+    "calopihaven.com": {
+      "before": {
+        "nameServers": [
+          {
+            "hostName": "ns-cloud-c2.googledomains.com"
+          },
+          {
+            "hostName": "ns-cloud-c3.googledomains.com"
+          },
+          {
+            "hostName": "ns-cloud-c1.googledomains.com"
+          },
+          {
+            "hostName": "ns-cloud-c4.googledomains.com"
+          }
+        ]
+      },
+      "status": 200,
+      "time": "2026-10-26T19:00:54.511Z",
+      "after": {
+        "nameServers": [
+          {
+            "hostName": "ns-1195.awsdns-21.org"
+          },
+          {
+            "hostName": "ns-872.awsdns-45.net"
+          },
+          {
+            "hostName": "ns-189.awsdns-23.com"
+          },
+          {
+            "hostName": "ns-1701.awsdns-20.co.uk"
+          }
+        ]
+      }
+    },
+    "silvermill8294.com": {
+      "before": {
+        "nameServers": [
+          {
+            "hostName": "dns2.p01.nsone.net"
+          },
+          {
+            "hostName": "dns4.p01.nsone.net"
+          },
+          {
+            "hostName": "ns01.squarespacedns.com"
+          },
+          {
+            "hostName": "ns03.squarespacedns.com"
+          },
+          {
+            "hostName": "ns04.squarespacedns.com"
+          },
+          {
+            "hostName": "dns3.p01.nsone.net"
+          },
+          {
+            "hostName": "dns1.p01.nsone.net"
+          },
+          {
+            "hostName": "ns02.squarespacedns.com"
+          }
+        ]
+      },
+      "status": 200,
+      "time": "2026-10-26T19:00:56.729Z",
+      "after": {
+        "nameServers": [
+          {
+            "hostName": "ns-2018.awsdns-60.co.uk"
+          },
+          {
+            "hostName": "ns-1234.awsdns-26.org"
+          },
+          {
+            "hostName": "ns-960.awsdns-56.net"
+          },
+          {
+            "hostName": "ns-377.awsdns-47.com"
+          }
+        ]
+      }
+    }
+  },
+  "dnssec": {
+    "status": 204,
+    "body": "",
+    "time": "2026-10-26T18:56:13.146Z"
+  },
+  "redhawk2240.com": {
+    "status": "aws_hosting_live_via_temporary_redirect; nameserver migration pending DNSSEC cache expiry",
+    "dnssec_removed_at": "2026-10-26T18:56:13.146Z",
+    "ds_absence_observed_by": "2026-10-26T19:00:00Z",
+    "safe_nameserver_cutover_after": "2026-10-27T19:00:00Z",
+    "old_nameservers": [
+      "ns-cloud-a1.googledomains.com",
+      "ns-cloud-a2.googledomains.com",
+      "ns-cloud-a3.googledomains.com",
+      "ns-cloud-a4.googledomains.com"
+    ],
+    "temporary_forward_target": "https://ddafqpgye8k2a.cloudfront.net/"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "_777a65c7f76b1c050d0407092483cbb4.calopihaven.com.",
+    "Type": "CNAME",
+    "Value": "_10d31c3e8473750989c290f06a45f4ad.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_735db6614473db27a345a92a8f9643e4.www.calopihaven.com.",
+    "Type": "CNAME",
+    "Value": "_cbaed62804eaa34c1aba647086974e56.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_257b85413393cd8b4034b702e4c59826.redhawk2240.com.",
+    "Type": "CNAME",
+    "Value": "_33d0629d336a9eb85f4c823b50cf5a1a.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_dad5650595099f393b14b7c7db7a0ac4.checkin.redhawk2240.com.",
+    "Type": "CNAME",
+    "Value": "_b44e472ba1b7190d3eb8c18d3aeef00a.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_02f08c96dfc46d7a6a7d47fd0d5637f4.checkin.silvermill8294.com.",
+    "Type": "CNAME",
+    "Value": "_a347aae9ed23150da7df64e18c2feaea.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_56f24db4453a143c091b16042e94d3e0.silvermill8294.com.",
+    "Type": "CNAME",
+    "Value": "_55b2b4f7245a1f4da6ecbf513c32ee07.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_f7bbc49ccd030e553926c2ac397d8d41.www.redhawk2240.com.",
+    "Type": "CNAME",
+    "Value": "_23c7022d75183524608021a58602e6b1.wzccmgtwzk.acm-validations.aws."
+  },
+  {
+    "Name": "_1974700fc593ef7b7c787580097642c8.www.silvermill8294.com.",
+    "Type": "CNAME",
+    "Value": "_63232babcf0a8b836d1d832ebd22ac42.wzccmgtwzk.acm-validations.aws."
+  }
+]

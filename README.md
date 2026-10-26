@@ -22,8 +22,12 @@ Silvermill passes separate adult and child counts to match its OwnerRez rules.
 No API keys are stored. Availability, pricing, rental terms and checkout are
 handled by OwnerRez. No inquiry, reservation or payment was submitted in testing.
 
-The current custom domains and check-in guides are unchanged. These review URLs
-remain noindex until the custom-domain launch.
+Production is deployed to private S3 and CloudFront in the TicoSync account.
+Calopi Haven and Silvermill nameservers are now Route 53; Red Hawk's final
+nameserver move is held for the old DNSSEC cache deadline, October 27 at 1 PM
+Costa Rica time. Existing forwarding temporarily bridges cached old DNS to AWS.
+See [production status and runbook](docs/aws-deployment.md). GitHub review URLs
+remain noindex; production packages have indexing metadata.
 
 ## Rebuild and preview
 
@@ -39,9 +43,10 @@ homepage is `index.html`, styled by `calopi.css`; the property builder only writ
 
 `python3 scripts/build_domains.py` creates separate static hosting directories
 under `dist/calopihaven.com`, `dist/redhawk2240.com`, and `dist/silvermill8294.com`,
-each with the correct root `index.html` and shared assets. This packages the
-sites; it does not update DNS or deploy any custom domain. Keep review noindex
-until the launch configuration is finalized.
+each with the correct root `index.html` and shared assets. Use `--production` for indexable production packages. `scripts/deploy_aws.py`
+uploads them to the existing bucket and invalidates CloudFront. DNS and the
+certificate are already provisioned; see the deployment runbook for the staged
+Red Hawk nameserver step.
 
 Browser verification:
 

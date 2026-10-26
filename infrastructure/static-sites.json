@@ -1,0 +1,947 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Calopi Haven: private S3, three CloudFront distributions and Route 53 zones",
+  "Parameters": {
+    "EnableCustomDomains": {
+      "Type": "String",
+      "AllowedValues": [
+        "true",
+        "false"
+      ],
+      "Default": "false"
+    },
+    "CertificateArn": {
+      "Type": "String",
+      "Default": ""
+    }
+  },
+  "Conditions": {
+    "CustomDomains": {
+      "Fn::Equals": [
+        {
+          "Ref": "EnableCustomDomains"
+        },
+        "true"
+      ]
+    }
+  },
+  "Resources": {
+    "SitesBucket": {
+      "Type": "AWS::S3::Bucket",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BucketName": {
+          "Fn::Sub": "ticosync-calopihaven-sites-${AWS::AccountId}"
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "IgnorePublicAcls": true,
+          "BlockPublicPolicy": true,
+          "RestrictPublicBuckets": true
+        },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "VersioningConfiguration": {
+          "Status": "Enabled"
+        },
+        "Tags": [
+          {
+            "Key": "Application",
+            "Value": "calopihaven"
+          }
+        ]
+      }
+    },
+    "OriginAccess": {
+      "Type": "AWS::CloudFront::OriginAccessControl",
+      "Properties": {
+        "OriginAccessControlConfig": {
+          "Name": {
+            "Fn::Sub": "${AWS::StackName}-s3"
+          },
+          "OriginAccessControlOriginType": "s3",
+          "SigningBehavior": "always",
+          "SigningProtocol": "sigv4"
+        }
+      }
+    },
+    "SecurityHeaders": {
+      "Type": "AWS::CloudFront::ResponseHeadersPolicy",
+      "Properties": {
+        "ResponseHeadersPolicyConfig": {
+          "Name": {
+            "Fn::Sub": "${AWS::StackName}-headers"
+          },
+          "SecurityHeadersConfig": {
+            "ContentTypeOptions": {
+              "Override": true
+            },
+            "FrameOptions": {
+              "FrameOption": "DENY",
+              "Override": true
+            },
+            "ReferrerPolicy": {
+              "ReferrerPolicy": "strict-origin-when-cross-origin",
+              "Override": true
+            },
+            "StrictTransportSecurity": {
+              "AccessControlMaxAgeSec": 31536000,
+              "IncludeSubdomains": false,
+              "Preload": false,
+              "Override": true
+            }
+          }
+        }
+      }
+    },
+    "CalopiZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "Name": "calopihaven.com",
+        "HostedZoneConfig": {
+          "Comment": "Calopi Haven public DNS; existing email and guest guides preserved before delegation"
+        },
+        "HostedZoneTags": [
+          {
+            "Key": "Application",
+            "Value": "calopihaven"
+          }
+        ]
+      }
+    },
+    "CalopiRedirect": {
+      "Type": "AWS::CloudFront::Function",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-calopi-www"
+        },
+        "AutoPublish": true,
+        "FunctionConfig": {
+          "Comment": "Redirect www to the canonical apex; preserve query strings",
+          "Runtime": "cloudfront-js-2.0"
+        },
+        "FunctionCode": "function handler(event) { var r=event.request; if(r.headers.host.value==='www.calopihaven.com'){var q=[];for(var k in r.querystring){var p=r.querystring[k];(p.multiValue||[p]).forEach(function(v){q.push(encodeURIComponent(k)+'='+encodeURIComponent(v.value));});}return {statusCode:301,statusDescription:'Moved Permanently',headers:{location:{value:'https://calopihaven.com'+r.uri+(q.length?'?'+q.join('&'):'')}}};}return r;}"
+      }
+    },
+    "CalopiCDN": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Enabled": true,
+          "Comment": "Calopi Haven: calopihaven.com",
+          "DefaultRootObject": "index.html",
+          "HttpVersion": "http2and3",
+          "IPV6Enabled": true,
+          "PriceClass": "PriceClass_100",
+          "Aliases": {
+            "Fn::If": [
+              "CustomDomains",
+              [
+                "calopihaven.com",
+                "www.calopihaven.com"
+              ],
+              {
+                "Ref": "AWS::NoValue"
+              }
+            ]
+          },
+          "ViewerCertificate": {
+            "Fn::If": [
+              "CustomDomains",
+              {
+                "AcmCertificateArn": {
+                  "Ref": "CertificateArn"
+                },
+                "SslSupportMethod": "sni-only",
+                "MinimumProtocolVersion": "TLSv1.2_2021"
+              },
+              {
+                "CloudFrontDefaultCertificate": true
+              }
+            ]
+          },
+          "Origins": [
+            {
+              "Id": "PrivateS3",
+              "DomainName": {
+                "Fn::GetAtt": [
+                  "SitesBucket",
+                  "RegionalDomainName"
+                ]
+              },
+              "OriginPath": "/calopihaven.com",
+              "OriginAccessControlId": {
+                "Ref": "OriginAccess"
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": ""
+              }
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "PrivateS3",
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "AllowedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "CachedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "Compress": true,
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+            "ResponseHeadersPolicyId": {
+              "Ref": "SecurityHeaders"
+            },
+            "FunctionAssociations": [
+              {
+                "EventType": "viewer-request",
+                "FunctionARN": {
+                  "Fn::GetAtt": [
+                    "CalopiRedirect",
+                    "FunctionARN"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "CalopiApexA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "CalopiZone"
+        },
+        "Name": "calopihaven.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "CalopiCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "CalopiWWWA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "CalopiZone"
+        },
+        "Name": "www.calopihaven.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "CalopiCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "CalopiApexAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "CalopiZone"
+        },
+        "Name": "calopihaven.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "CalopiCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "CalopiWWWAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "CalopiZone"
+        },
+        "Name": "www.calopihaven.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "CalopiCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "RedHawkZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "Name": "redhawk2240.com",
+        "HostedZoneConfig": {
+          "Comment": "Calopi Haven public DNS; existing email and guest guides preserved before delegation"
+        },
+        "HostedZoneTags": [
+          {
+            "Key": "Application",
+            "Value": "calopihaven"
+          }
+        ]
+      }
+    },
+    "RedHawkRedirect": {
+      "Type": "AWS::CloudFront::Function",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-redhawk-www"
+        },
+        "AutoPublish": true,
+        "FunctionConfig": {
+          "Comment": "Redirect www to the canonical apex; preserve query strings",
+          "Runtime": "cloudfront-js-2.0"
+        },
+        "FunctionCode": "function handler(event) { var r=event.request;if(r.headers.host.value==='checkin.redhawk2240.com'){return {statusCode:302,statusDescription:'Found',headers:{location:{value:\"https://www.canva.com/design/DAERjZ0Ev_I/bEX8H5mgrrcJFfqGkm_j7w/view\"}}};} if(false){var q=[];for(var k in r.querystring){var p=r.querystring[k];(p.multiValue||[p]).forEach(function(v){q.push(encodeURIComponent(k)+'='+encodeURIComponent(v.value));});}return {statusCode:301,statusDescription:'Moved Permanently',headers:{location:{value:'https://redhawk2240.com'+r.uri+(q.length?'?'+q.join('&'):'')}}};}return r;}"
+      }
+    },
+    "RedHawkCDN": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Enabled": true,
+          "Comment": "Calopi Haven: redhawk2240.com",
+          "DefaultRootObject": "index.html",
+          "HttpVersion": "http2and3",
+          "IPV6Enabled": true,
+          "PriceClass": "PriceClass_100",
+          "Aliases": {
+            "Fn::If": [
+              "CustomDomains",
+              [
+                "redhawk2240.com",
+                "www.redhawk2240.com",
+                "checkin.redhawk2240.com"
+              ],
+              {
+                "Ref": "AWS::NoValue"
+              }
+            ]
+          },
+          "ViewerCertificate": {
+            "Fn::If": [
+              "CustomDomains",
+              {
+                "AcmCertificateArn": {
+                  "Ref": "CertificateArn"
+                },
+                "SslSupportMethod": "sni-only",
+                "MinimumProtocolVersion": "TLSv1.2_2021"
+              },
+              {
+                "CloudFrontDefaultCertificate": true
+              }
+            ]
+          },
+          "Origins": [
+            {
+              "Id": "PrivateS3",
+              "DomainName": {
+                "Fn::GetAtt": [
+                  "SitesBucket",
+                  "RegionalDomainName"
+                ]
+              },
+              "OriginPath": "/redhawk2240.com",
+              "OriginAccessControlId": {
+                "Ref": "OriginAccess"
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": ""
+              }
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "PrivateS3",
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "AllowedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "CachedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "Compress": true,
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+            "ResponseHeadersPolicyId": {
+              "Ref": "SecurityHeaders"
+            },
+            "FunctionAssociations": [
+              {
+                "EventType": "viewer-request",
+                "FunctionARN": {
+                  "Fn::GetAtt": [
+                    "RedHawkRedirect",
+                    "FunctionARN"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "RedHawkApexA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "RedHawkZone"
+        },
+        "Name": "redhawk2240.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "RedHawkCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "RedHawkWWWA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "RedHawkZone"
+        },
+        "Name": "www.redhawk2240.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "RedHawkCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "RedHawkApexAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "RedHawkZone"
+        },
+        "Name": "redhawk2240.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "RedHawkCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "RedHawkWWWAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "RedHawkZone"
+        },
+        "Name": "www.redhawk2240.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "RedHawkCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "RedHawkCheckinA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "RedHawkZone"
+        },
+        "Name": "checkin.redhawk2240.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "RedHawkCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "RedHawkCheckinAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "RedHawkZone"
+        },
+        "Name": "checkin.redhawk2240.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "RedHawkCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "SilvermillZone": {
+      "Type": "AWS::Route53::HostedZone",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "Name": "silvermill8294.com",
+        "HostedZoneConfig": {
+          "Comment": "Calopi Haven public DNS; existing email and guest guides preserved before delegation"
+        },
+        "HostedZoneTags": [
+          {
+            "Key": "Application",
+            "Value": "calopihaven"
+          }
+        ]
+      }
+    },
+    "SilvermillRedirect": {
+      "Type": "AWS::CloudFront::Function",
+      "Properties": {
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-silvermill-www"
+        },
+        "AutoPublish": true,
+        "FunctionConfig": {
+          "Comment": "Redirect www to the canonical apex; preserve query strings",
+          "Runtime": "cloudfront-js-2.0"
+        },
+        "FunctionCode": "function handler(event) { var r=event.request;if(r.headers.host.value==='checkin.silvermill8294.com'){return {statusCode:302,statusDescription:'Found',headers:{location:{value:\"https://www.canva.com/design/DAGY2AeTcdk/S1pbqUKvIRAhRwRREwAWig/view?utm_content=DAGY2AeTcdk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hb09b2cb887\"}}};} if(r.headers.host.value==='www.silvermill8294.com'){var q=[];for(var k in r.querystring){var p=r.querystring[k];(p.multiValue||[p]).forEach(function(v){q.push(encodeURIComponent(k)+'='+encodeURIComponent(v.value));});}return {statusCode:301,statusDescription:'Moved Permanently',headers:{location:{value:'https://silvermill8294.com'+r.uri+(q.length?'?'+q.join('&'):'')}}};}return r;}"
+      }
+    },
+    "SilvermillCDN": {
+      "Type": "AWS::CloudFront::Distribution",
+      "Properties": {
+        "DistributionConfig": {
+          "Enabled": true,
+          "Comment": "Calopi Haven: silvermill8294.com",
+          "DefaultRootObject": "index.html",
+          "HttpVersion": "http2and3",
+          "IPV6Enabled": true,
+          "PriceClass": "PriceClass_100",
+          "Aliases": {
+            "Fn::If": [
+              "CustomDomains",
+              [
+                "silvermill8294.com",
+                "www.silvermill8294.com",
+                "checkin.silvermill8294.com"
+              ],
+              {
+                "Ref": "AWS::NoValue"
+              }
+            ]
+          },
+          "ViewerCertificate": {
+            "Fn::If": [
+              "CustomDomains",
+              {
+                "AcmCertificateArn": {
+                  "Ref": "CertificateArn"
+                },
+                "SslSupportMethod": "sni-only",
+                "MinimumProtocolVersion": "TLSv1.2_2021"
+              },
+              {
+                "CloudFrontDefaultCertificate": true
+              }
+            ]
+          },
+          "Origins": [
+            {
+              "Id": "PrivateS3",
+              "DomainName": {
+                "Fn::GetAtt": [
+                  "SitesBucket",
+                  "RegionalDomainName"
+                ]
+              },
+              "OriginPath": "/silvermill8294.com",
+              "OriginAccessControlId": {
+                "Ref": "OriginAccess"
+              },
+              "S3OriginConfig": {
+                "OriginAccessIdentity": ""
+              }
+            }
+          ],
+          "DefaultCacheBehavior": {
+            "TargetOriginId": "PrivateS3",
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "AllowedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "CachedMethods": [
+              "GET",
+              "HEAD"
+            ],
+            "Compress": true,
+            "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+            "ResponseHeadersPolicyId": {
+              "Ref": "SecurityHeaders"
+            },
+            "FunctionAssociations": [
+              {
+                "EventType": "viewer-request",
+                "FunctionARN": {
+                  "Fn::GetAtt": [
+                    "SilvermillRedirect",
+                    "FunctionARN"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "SilvermillApexA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "SilvermillZone"
+        },
+        "Name": "silvermill8294.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "SilvermillCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "SilvermillWWWA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "SilvermillZone"
+        },
+        "Name": "www.silvermill8294.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "SilvermillCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "SilvermillApexAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "SilvermillZone"
+        },
+        "Name": "silvermill8294.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "SilvermillCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "SilvermillWWWAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "SilvermillZone"
+        },
+        "Name": "www.silvermill8294.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "SilvermillCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "SilvermillCheckinA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "SilvermillZone"
+        },
+        "Name": "checkin.silvermill8294.com",
+        "Type": "A",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "SilvermillCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "SilvermillCheckinAAAA": {
+      "Type": "AWS::Route53::RecordSet",
+      "Properties": {
+        "HostedZoneId": {
+          "Ref": "SilvermillZone"
+        },
+        "Name": "checkin.silvermill8294.com",
+        "Type": "AAAA",
+        "AliasTarget": {
+          "DNSName": {
+            "Fn::GetAtt": [
+              "SilvermillCDN",
+              "DomainName"
+            ]
+          },
+          "HostedZoneId": "Z2FDTNDATAQYW2",
+          "EvaluateTargetHealth": false
+        }
+      }
+    },
+    "BucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "SitesBucket"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "AllowCloudFrontOnly",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudfront.amazonaws.com"
+              },
+              "Action": "s3:GetObject",
+              "Resource": {
+                "Fn::Sub": "${SitesBucket.Arn}/*"
+              },
+              "Condition": {
+                "StringEquals": {
+                  "AWS:SourceArn": [
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${CalopiCDN}"
+                    },
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${RedHawkCDN}"
+                    },
+                    {
+                      "Fn::Sub": "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${SilvermillCDN}"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "Sid": "DenyInsecureTransport",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "s3:*",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "SitesBucket",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Sub": "${SitesBucket.Arn}/*"
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Bucket": {
+      "Value": {
+        "Ref": "SitesBucket"
+      }
+    },
+    "CalopiDistributionId": {
+      "Value": {
+        "Ref": "CalopiCDN"
+      }
+    },
+    "CalopiCloudFrontDomain": {
+      "Value": {
+        "Fn::GetAtt": [
+          "CalopiCDN",
+          "DomainName"
+        ]
+      }
+    },
+    "CalopiZoneId": {
+      "Value": {
+        "Ref": "CalopiZone"
+      }
+    },
+    "CalopiNameservers": {
+      "Value": {
+        "Fn::Join": [
+          ", ",
+          {
+            "Fn::GetAtt": [
+              "CalopiZone",
+              "NameServers"
+            ]
+          }
+        ]
+      }
+    },
+    "RedHawkDistributionId": {
+      "Value": {
+        "Ref": "RedHawkCDN"
+      }
+    },
+    "RedHawkCloudFrontDomain": {
+      "Value": {
+        "Fn::GetAtt": [
+          "RedHawkCDN",
+          "DomainName"
+        ]
+      }
+    },
+    "RedHawkZoneId": {
+      "Value": {
+        "Ref": "RedHawkZone"
+      }
+    },
+    "RedHawkNameservers": {
+      "Value": {
+        "Fn::Join": [
+          ", ",
+          {
+            "Fn::GetAtt": [
+              "RedHawkZone",
+              "NameServers"
+            ]
+          }
+        ]
+      }
+    },
+    "SilvermillDistributionId": {
+      "Value": {
+        "Ref": "SilvermillCDN"
+      }
+    },
+    "SilvermillCloudFrontDomain": {
+      "Value": {
+        "Fn::GetAtt": [
+          "SilvermillCDN",
+          "DomainName"
+        ]
+      }
+    },
+    "SilvermillZoneId": {
+      "Value": {
+        "Ref": "SilvermillZone"
+      }
+    },
+    "SilvermillNameservers": {
+      "Value": {
+        "Fn::Join": [
+          ", ",
+          {
+            "Fn::GetAtt": [
+              "SilvermillZone",
+              "NameServers"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

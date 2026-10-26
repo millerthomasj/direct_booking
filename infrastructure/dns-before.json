@@ -1,0 +1,463 @@
+{
+  "calopihaven.com": {
+    "dnssec_before": false,
+    "records": [
+      {
+        "Name": "pic._domainkey.calopihaven.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/dTbEMNUGMcq+KZGALCCEEHWFHvyZkaZIwuvOlG2MKhwjthbMOFF/z2B5g06gHtgf/1tPiKobmKbR65gXk0Nu1aj9BNnHyvu45pfV34qRo2s+jIkoAFeoU0tfjog2ay2B8UQHIvw/GW6XTr9fWGG5eJ6\" \"I zx0ZoB29P9L7l1/O2QIDAQAB\""
+          }
+        ]
+      },
+      {
+        "Name": "calopihaven.com.",
+        "Type": "MX",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "10 mxa.mailgun.org."
+          },
+          {
+            "Value": "10 mxb.mailgun.org."
+          }
+        ]
+      },
+      {
+        "Name": "calopihaven.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=spf1 include:mailgun.org ~all\""
+          }
+        ]
+      },
+      {
+        "Name": "www.calopihaven.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "ext-sq.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "_domainconnect.calopihaven.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "_domainconnect.domains.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "calopihaven.com.",
+        "Type": "A",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "198.185.159.144"
+          },
+          {
+            "Value": "198.185.159.145"
+          },
+          {
+            "Value": "198.49.23.144"
+          },
+          {
+            "Value": "198.49.23.145"
+          }
+        ]
+      }
+    ],
+    "preserved_recordsets": [
+      {
+        "Name": "pic._domainkey.calopihaven.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/dTbEMNUGMcq+KZGALCCEEHWFHvyZkaZIwuvOlG2MKhwjthbMOFF/z2B5g06gHtgf/1tPiKobmKbR65gXk0Nu1aj9BNnHyvu45pfV34qRo2s+jIkoAFeoU0tfjog2ay2B8UQHIvw/GW6XTr9fWGG5eJ6\" \"I zx0ZoB29P9L7l1/O2QIDAQAB\""
+          }
+        ]
+      },
+      {
+        "Name": "calopihaven.com.",
+        "Type": "MX",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "10 mxa.mailgun.org."
+          },
+          {
+            "Value": "10 mxb.mailgun.org."
+          }
+        ]
+      },
+      {
+        "Name": "calopihaven.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=spf1 include:mailgun.org ~all\""
+          }
+        ]
+      },
+      {
+        "Name": "_domainconnect.calopihaven.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "_domainconnect.domains.squarespace.com."
+          }
+        ]
+      }
+    ]
+  },
+  "redhawk2240.com": {
+    "dnssec_before": true,
+    "records": [
+      {
+        "Name": "6pwpxmpb3ncd.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "gv-op6irz3muyfoam.dv.googlehosted.com."
+          }
+        ]
+      },
+      {
+        "Name": "kkuz2o4kgp35.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "gv-ks2rnqulfaol7i.dv.googlehosted.com."
+          }
+        ]
+      },
+      {
+        "Name": "sznhgkqn5vex.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "gv-wg6xq2dw4dqdce.dv.googlehosted.com."
+          }
+        ]
+      },
+      {
+        "Name": "redhawk2240.com.",
+        "Type": "MX",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "1 aspmx.l.google.com."
+          },
+          {
+            "Value": "10 alt3.aspmx.l.google.com."
+          },
+          {
+            "Value": "10 alt4.aspmx.l.google.com."
+          },
+          {
+            "Value": "5 alt1.aspmx.l.google.com."
+          },
+          {
+            "Value": "5 alt2.aspmx.l.google.com."
+          }
+        ]
+      },
+      {
+        "Name": "redhawk2240.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"google-site-verification=IFXeG4v9EqrsSrOI95AxPsJedQcordLSBco2FhSZgJk\""
+          },
+          {
+            "Value": "\"v=spf1 include:_spf.google.com ~all\""
+          }
+        ]
+      },
+      {
+        "Name": "google._domainkey.redhawk2240.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlVTvFAyHPiGzvgBxh3I0vigEu6tTtCVz7AZIoRUd0SDaNfewpyWpqrtwMFr3l6GL0Q90yaC5LKUQp2tEIMbvmXGM/ROkrN7/dPCzhKo4YGoauhl3+axZBlCYIdtJivyl6fubGfIgtc\" \"wd9N4VBq89Rk/qudyxPP79arli23dErV62mTm9CxAQgWw/uUTggV0Z90W0FVsKDEdHE/u12u2xOHgDtoIjtKMUggDq9bkrzU9zwCiUYQCkYEcbpBbdt3FNk2j3vctB6n7FxGeh+T2rcyOUjhJ96v70NmyZMUAQkGBv7JF6rOOa6wTSLfVCoUJlNaebpM+mvseaD9B8r9\" \"72YwIDAQAB\""
+          }
+        ]
+      },
+      {
+        "Name": "redhawk2240.com.",
+        "Type": "A",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "198.185.159.144"
+          }
+        ]
+      },
+      {
+        "Name": "checkin.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "ext-sq.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "_domainconnect.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "_domainconnect.domains.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "www.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "ext-sq.squarespace.com."
+          }
+        ]
+      }
+    ],
+    "preserved_recordsets": [
+      {
+        "Name": "6pwpxmpb3ncd.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "gv-op6irz3muyfoam.dv.googlehosted.com."
+          }
+        ]
+      },
+      {
+        "Name": "kkuz2o4kgp35.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "gv-ks2rnqulfaol7i.dv.googlehosted.com."
+          }
+        ]
+      },
+      {
+        "Name": "sznhgkqn5vex.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "gv-wg6xq2dw4dqdce.dv.googlehosted.com."
+          }
+        ]
+      },
+      {
+        "Name": "redhawk2240.com.",
+        "Type": "MX",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "1 aspmx.l.google.com."
+          },
+          {
+            "Value": "10 alt3.aspmx.l.google.com."
+          },
+          {
+            "Value": "10 alt4.aspmx.l.google.com."
+          },
+          {
+            "Value": "5 alt1.aspmx.l.google.com."
+          },
+          {
+            "Value": "5 alt2.aspmx.l.google.com."
+          }
+        ]
+      },
+      {
+        "Name": "redhawk2240.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"google-site-verification=IFXeG4v9EqrsSrOI95AxPsJedQcordLSBco2FhSZgJk\""
+          },
+          {
+            "Value": "\"v=spf1 include:_spf.google.com ~all\""
+          }
+        ]
+      },
+      {
+        "Name": "google._domainkey.redhawk2240.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlVTvFAyHPiGzvgBxh3I0vigEu6tTtCVz7AZIoRUd0SDaNfewpyWpqrtwMFr3l6GL0Q90yaC5LKUQp2tEIMbvmXGM/ROkrN7/dPCzhKo4YGoauhl3+axZBlCYIdtJivyl6fubGfIgtc\" \"wd9N4VBq89Rk/qudyxPP79arli23dErV62mTm9CxAQgWw/uUTggV0Z90W0FVsKDEdHE/u12u2xOHgDtoIjtKMUggDq9bkrzU9zwCiUYQCkYEcbpBbdt3FNk2j3vctB6n7FxGeh+T2rcyOUjhJ96v70NmyZMUAQkGBv7JF6rOOa6wTSLfVCoUJlNaebpM+mvseaD9B8r9\" \"72YwIDAQAB\""
+          }
+        ]
+      },
+      {
+        "Name": "_domainconnect.redhawk2240.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "_domainconnect.domains.squarespace.com."
+          }
+        ]
+      }
+    ]
+  },
+  "silvermill8294.com": {
+    "dnssec_before": false,
+    "records": [
+      {
+        "Name": "silvermill8294.com.",
+        "Type": "A",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "198.185.159.144"
+          },
+          {
+            "Value": "198.185.159.145"
+          },
+          {
+            "Value": "198.49.23.144"
+          },
+          {
+            "Value": "198.49.23.145"
+          }
+        ]
+      },
+      {
+        "Name": "_domainconnect.silvermill8294.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "_domainconnect.domains.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "checkin.silvermill8294.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "ext-sq.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "www.silvermill8294.com.",
+        "Type": "CNAME",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "ext-sq.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "silvermill8294.com.",
+        "Type": "MX",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "10 mxa.mailgun.org."
+          },
+          {
+            "Value": "10 mxb.mailgun.org."
+          }
+        ]
+      },
+      {
+        "Name": "silvermill8294.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=spf1 include:mailgun.org ~all\""
+          }
+        ]
+      },
+      {
+        "Name": "smtp._domainkey.silvermill8294.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCfGGSjW6NbctL0CU8Gl3XycnkCQyHXrUjsSzg61LKFze8ow/FSJ6HVeLxrFSoL+mmiy5qBeyLfVEguBtabTeoT5MXzP/CgQYV14tE6LUDRBdaEFxjOcVBxbarGTf8ZkSI4QJEgXbIKxrhgxITkXVWG6sC\" \"vLbLuKBWsgjK7cnA58QIDAQAB\""
+          }
+        ]
+      }
+    ],
+    "preserved_recordsets": [
+      {
+        "Name": "_domainconnect.silvermill8294.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "_domainconnect.domains.squarespace.com."
+          }
+        ]
+      },
+      {
+        "Name": "silvermill8294.com.",
+        "Type": "MX",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "10 mxa.mailgun.org."
+          },
+          {
+            "Value": "10 mxb.mailgun.org."
+          }
+        ]
+      },
+      {
+        "Name": "silvermill8294.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=spf1 include:mailgun.org ~all\""
+          }
+        ]
+      },
+      {
+        "Name": "smtp._domainkey.silvermill8294.com.",
+        "Type": "TXT",
+        "TTL": 14400,
+        "ResourceRecords": [
+          {
+            "Value": "\"k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCfGGSjW6NbctL0CU8Gl3XycnkCQyHXrUjsSzg61LKFze8ow/FSJ6HVeLxrFSoL+mmiy5qBeyLfVEguBtabTeoT5MXzP/CgQYV14tE6LUDRBdaEFxjOcVBxbarGTf8ZkSI4QJEgXbIKxrhgxITkXVWG6sC\" \"vLbLuKBWsgjK7cnA58QIDAQAB\""
+          }
+        ]
+      }
+    ]
+  }
+}
