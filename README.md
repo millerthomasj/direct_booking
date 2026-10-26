@@ -20,8 +20,8 @@ URLs. Both property footers link back to Calopi Haven and to the other property.
 
 The original design comparison remains at `concepts.html`. Both selected sites
 use compact date/guest forms that pass selections to the correct OwnerRez hosted
-booking widget. Red Hawk accommodates six; Silvermill accommodates five (at most four adults).
-Silvermill passes separate adult and child counts to match its OwnerRez rules.
+booking widget. Red Hawk accommodates six; Silvermill accommodates up to four adults and one child.
+Silvermill passes separate adult and child counts, with a maximum of four adults and one child in its date selector.
 No API keys are stored. Availability, pricing, rental terms and checkout are
 handled by OwnerRez. No inquiry, reservation or payment was submitted in testing.
 
@@ -73,7 +73,7 @@ Silvermill: https://www.airbnb.com/rooms/1237080165740047360 and the welcome pag
 of the guide linked by http://checkin.silvermill8294.com/, inspected October 26,
 2026. Downloaded listing photos and source URLs are recorded in
 `docs/silvermill-photo-sources.json`. Silvermill is a fifth-floor, one-bedroom,
-one-bath condo for five with a king bed, twin sleeper chair and living-room sofa
+one-bath condo for up to four adults and one child with a king bed, twin sleeper chair and living-room sofa
 bed. The pool is at nearby Dakota Lodge; hot tubs are at Silvermill. No access
 codes, Wi-Fi credentials or private arrival instructions were copied.
 

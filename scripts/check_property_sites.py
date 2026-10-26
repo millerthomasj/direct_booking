@@ -16,7 +16,9 @@ async def main():
     await page.wait_for_function('Array.from(document.images).every(i=>!i.getAttribute("src")||(i.complete&&i.naturalWidth>0))')
     assert await page.evaluate('document.documentElement.scrollWidth<=innerWidth'),(name,width,'overflow')
     if name=='redhawk':assert await page.locator('[name=or_guests] option').count()==guests
-    else:assert await page.locator('[name=or_adults] option').count()==4
+    else:
+     assert await page.locator('[name=or_adults] option').count()==4
+     assert await page.locator('[name=or_children] option').evaluate_all('(options)=>options.map(o=>o.value)')==['0','1']
     assert await page.locator('.concept-bar').count()==0
     if name=='silvermill':
      assert await page.locator('img[src*="assets/photo-"]').count()==0

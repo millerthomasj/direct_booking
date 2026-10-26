@@ -34,13 +34,13 @@ Do not treat it as one site with interchangeable booking widgets.
 | Property | Capacity / layout | OwnerRez widget ID | OwnerRez property key |
 | --- | --- | --- | --- |
 | Red Hawk 2240 | 6 guests; 2 bedrooms; 2 baths | `f13cd4d5594545a4b410a094355b8b4d` | `bc7244c04d284b70baab4dede8d52fb0` |
-| Silvermill 8294 | 5 guests total, maximum 4 adults; 1 bedroom; 1 bath | `c10114d38806484bbd3c7bfd9bf4858e` | `3f15f3b1b0f548328ab5276d7014358a` |
+| Silvermill 8294 | Up to 4 adults and 1 child; 1 bedroom; 1 bath | `c10114d38806484bbd3c7bfd9bf4858e` | `3f15f3b1b0f548328ab5276d7014358a` |
 
 - Keep the compact date/occupancy selector. The user rejected the full embedded
   OwnerRez contact form as too ugly. Submit GET to the correct hosted OwnerRez
   widget with `view=form`, `propertyKey`, `or_arrival`, and `or_departure`.
 - Red Hawk uses `or_guests`; Silvermill uses separate `or_adults` / `or_children`
-  and validates a combined maximum of five. No OwnerRez API key is needed.
+  and limits occupancy to at most four adults and one child. No OwnerRez API key is needed.
 - The compact selector does not know booked dates or rates. OwnerRez confirms
   availability, quoting, rental terms and secure checkout after continuing.
 - Never swap property IDs or send test inquiries/reservations/payments while
