@@ -33,13 +33,13 @@ async def main():
     await page.locator('[name=or_departure]').fill(departure)
     await page.locator('[name=or_guests]').select_option('6')
     await page.route('https://app.ownerrez.com/widgets/**',lambda route:route.fulfill(body='<p>Booking handoff verified</p>',content_type='text/html'))
-    async with page.expect_navigation():
-     await form.locator('button').click()
+    await form.locator('button').click()
+    assert await page.locator('.booking-dialog').evaluate('(d)=>d.open')
     from urllib.parse import urlparse,parse_qs
-    params=parse_qs(urlparse(page.url).query)
+    params=parse_qs(urlparse(await page.locator(".booking-widget-frame").get_attribute("src")).query)
     assert params['or_arrival']==[arrival] and params['or_departure']==[departure] and params['or_guests']==['6']
     assert params['propertyKey']==['bc7244c04d284b70baab4dede8d52fb0']
-    await page.go_back()
+    await page.locator(".booking-dialog .dialog-close").click()
     await page.locator('.faq summary').first.click();assert await page.locator('.faq details').first.get_attribute('open') is not None
     if concept=='summit':
      await page.locator('[data-season=summer]').click();assert await page.locator('[data-season=summer]').get_attribute('aria-pressed')=='true';assert 'Long days.' in await page.locator('.season-title').inner_text();assert 'photo-00' in await page.locator('.season-image').get_attribute('src')

@@ -67,8 +67,17 @@ Do not treat it as one site with interchangeable booking widgets.
 - Keep booking-provider branding out of public copy and metadata. Use the
   OwnerRez widget silently; preserve its functional URLs, fields and identifiers.
 - Keep the compact date/occupancy selector. The user rejected the full embedded
-  OwnerRez contact form as too ugly. Submit GET to the correct hosted OwnerRez
-  widget with `view=form`, `propertyKey`, `or_arrival`, and `or_departure`.
+  OwnerRez contact form as too ugly. The compact selector opens the FULL live
+  widget in an on-page `<dialog>` popup. Preserve selected dates/occupancy. The
+  popup embeds the widget endpoint directly (without `view=form`) to avoid a
+  double iframe; the fallback separate link uses the hosted `view=form` page.
+  Keep native target=_blank fallback for no-JS/unsupported browsers. “Browse
+  dates first” opens the popup without requiring dates. All runtime calendar,
+  rates and Book Now behavior belongs to the live widget. No API key is needed.
+  For booking changes, verify real quotes/calendar fields as well as mocked
+  navigation tests. The provider rejects localhost referrers: test with the
+  real domain origin (production packages can be routed locally in Playwright).
+  Iframe height messages must match the provider origin and iframe window.
 - Red Hawk uses `or_guests`; Silvermill uses separate `or_adults` / `or_children`
   and limits occupancy to at most four adults and one child. No OwnerRez API key is needed.
 - The compact selector does not know booked dates or rates. OwnerRez confirms

@@ -36,12 +36,25 @@ async def main():
     if name=='redhawk':await page.locator('[name=or_guests]').select_option(str(guests))
     else:
      await page.locator('[name=or_adults]').select_option('4');await page.locator('[name=or_children]').select_option('1')
-    await page.route('https://app.ownerrez.com/widgets/**',lambda route:route.fulfill(body='Booking handoff verified',content_type='text/html'))
-    async with page.expect_navigation():await page.locator('.booking-form button').click()
-    q=parse_qs(urlparse(page.url).query);assert q['propertyKey']==[key] and q['or_arrival']==[arrival]
+    await page.context.route('https://app.ownerrez.com/widgets/**',lambda route:route.fulfill(body='Booking handoff verified',content_type='text/html'))
+    await page.locator('.booking-form button').click()
+    dialog=page.locator('.booking-dialog')
+    assert await dialog.evaluate('(e)=>e.open')
+    frame_url=await dialog.locator('iframe').get_attribute('src')
+    q=parse_qs(urlparse(frame_url).query);assert q['propertyKey']==[key] and q['or_arrival']==[arrival]
+    assert 'view' not in q
     if name=='redhawk':assert q['or_guests']==[str(guests)]
     else:assert q['or_adults']==['4'] and q['or_children']==['1']
-    await page.go_back();await page.screenshot(path=str(ROOT/f'previews/{name}-{width}.jpg'),type='jpeg',quality=85,full_page=True)
+    await dialog.locator('.dialog-close').click()
+    assert not await dialog.evaluate('(e)=>e.open')
+    await page.locator('[data-booking-window]').click()
+    assert await dialog.evaluate('(e)=>e.open')
+    q=parse_qs(urlparse(await dialog.locator('iframe').get_attribute('src')).query)
+    assert 'or_arrival' not in q and q['propertyKey']==[key]
+    await page.keyboard.press('Escape')
+    assert not await dialog.evaluate('(e)=>e.open')
+    assert page.url.endswith(name+'.html')
+    await page.screenshot(path=str(ROOT/f'previews/{name}-{width}.jpg'),type='jpeg',quality=85,full_page=True)
     assert not errors,errors
     await page.close()
   await b.close()

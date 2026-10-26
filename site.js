@@ -5,14 +5,62 @@
   }
   const localDate=date=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
   const nextDay=value=>{const d=new Date(value+'T12:00:00');d.setDate(d.getDate()+1);return localDate(d)};
+  const bookingDialog=document.querySelector('.booking-dialog');
+  const openBookingWidget=hostedUrl=>{
+    if(!bookingDialog||typeof bookingDialog.showModal!=='function')return false;
+    const url=new URL(hostedUrl);
+    const fallback=bookingDialog.querySelector('.booking-dialog-fallback');
+    fallback.href=url.href;
+    // Load the embeddable widget directly, not the hosted page's wrapper iframe.
+    url.searchParams.delete('view');
+    url.searchParams.set('seq','0');
+    url.searchParams.set('referrer',location.href);
+    url.hash=encodeURIComponent(location.href);
+    const name=document.querySelector('.booking-form')?.dataset.propertyName||'Your stay';
+    bookingDialog.querySelector('h2').textContent=name;
+    const frame=bookingDialog.querySelector('iframe');
+    frame.title=`${name}: availability, pricing and booking`;
+    const loading=bookingDialog.querySelector('.booking-loading');
+    loading.hidden=false;
+    frame.onload=()=>{loading.hidden=true;};
+    frame.style.height='1200px';
+    frame.src=url.href;
+    bookingDialog.showModal();
+    document.documentElement.classList.add('booking-is-open');
+    return true;
+  };
+  window.addEventListener('message',event=>{
+    const frame=bookingDialog?.querySelector('iframe');
+    if(!bookingDialog?.open||event.origin!=='https://app.ownerrez.com'||event.source!==frame.contentWindow)return;
+    let data=event.data;
+    if(typeof data==='string'){try{data=JSON.parse(data);}catch(_){return;}}
+    const height=Number(data?.height);
+    if(Number.isFinite(height)&&height>0&&height<20000)frame.style.height=`${Math.ceil(height)}px`;
+  });
+  bookingDialog?.addEventListener('close',()=>{
+    document.documentElement.classList.remove('booking-is-open');
+    bookingDialog.querySelector('iframe').removeAttribute('src');
+  });
+  document.querySelectorAll('[data-booking-window]').forEach(link=>link.addEventListener('click',event=>{
+    if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    if(openBookingWidget(link.href))event.preventDefault();
+  }));
   document.querySelectorAll('.booking-form').forEach(form=>{
-    const arrival=form.elements.or_arrival,departure=form.elements.or_departure,error=form.querySelector('.date-error');
+    const arrival=form.elements.or_arrival,departure=form.elements.or_departure,error=form.querySelector('.date-error'),fallback=form.parentElement.querySelector('.booking-window-fallback');
     arrival.min=localDate(new Date());departure.min=nextDay(arrival.min);
     arrival.addEventListener('change',()=>{departure.min=nextDay(arrival.value||arrival.min);if(departure.value&&departure.value<departure.min)departure.value='';error.textContent=''});
     form.addEventListener('submit',event=>{
       error.textContent='';
+      if(fallback)fallback.hidden=true;
       if(form.dataset.maxGuests && (Number(form.elements.or_adults.value)>Number(form.dataset.maxAdults)||Number(form.elements.or_children.value)>Number(form.dataset.maxChildren)||Number(form.elements.or_adults.value)+Number(form.elements.or_children.value)>Number(form.dataset.maxGuests))){event.preventDefault();error.textContent='Silvermill accommodates up to 4 adults and 1 child.';return;}
-      if(!arrival.value||!departure.value||arrival.value<arrival.min||departure.value<=arrival.value){event.preventDefault();error.textContent='Choose a future check-in date and a later check-out date.';}
+      if(!arrival.value||!departure.value||arrival.value<arrival.min||departure.value<=arrival.value){event.preventDefault();error.textContent='Choose a future check-in date and a later check-out date.';return;}
+      event.preventDefault();
+      const url=new URL(form.action);
+      new FormData(form).forEach((value,key)=>url.searchParams.set(key,value));
+      if(!openBookingWidget(url.href)){
+        error.textContent='The booking popup could not open. Use the link below to continue.';
+        if(fallback){fallback.href=url.href;fallback.hidden=false;fallback.focus();}
+      }
     });
   });
   const lightbox=document.querySelector('.lightbox'),photos=[...document.querySelectorAll('[data-photo]')];let active=0;
