@@ -83,3 +83,13 @@ verified against the live Silvermill form without submitting contact details.
 
 Property photographs are the owner's supplied listing material. Outfit font is
 bundled under its OFL license in `assets/outfit-LICENSE.txt`.
+
+## Calopi Haven comparison layout
+
+The homepage leads with a Keystone Schoolmarm trail photograph and two condo
+choices. Property cards emphasize bedrooms, bathrooms and guest capacity; the
+comparison table covers beds, location, walking distance and pool/hot tub access.
+Phone visitors also see both short property summaries before the detailed cards.
+The trail photo is by Ben & Whitney Carey, licensed CC BY 2.0; attribution and
+license links appear in the footer. Source and transformation notes are recorded
+in `docs/keystone-photo-source.json`.
