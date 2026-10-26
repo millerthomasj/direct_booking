@@ -51,6 +51,8 @@ Do not treat it as one site with interchangeable booking widgets.
 | Red Hawk 2240 | 6 guests; 2 bedrooms; 2 baths | `f13cd4d5594545a4b410a094355b8b4d` | `bc7244c04d284b70baab4dede8d52fb0` |
 | Silvermill 8294 | Up to 4 adults and 1 child; 1 bedroom; 1 bath | `c10114d38806484bbd3c7bfd9bf4858e` | `3f15f3b1b0f548328ab5276d7014358a` |
 
+- Keep booking-provider branding out of public copy and metadata. Use the
+  OwnerRez widget silently; preserve its functional URLs, fields and identifiers.
 - Keep the compact date/occupancy selector. The user rejected the full embedded
   OwnerRez contact form as too ugly. Submit GET to the correct hosted OwnerRez
   widget with `view=form`, `propertyKey`, `or_arrival`, and `or_departure`.
